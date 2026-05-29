@@ -1,0 +1,679 @@
+{
+    "items": [
+        {
+            "name": "RulesTitle",
+            "text": "REGLAS DEL REFUGIO",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 82.0,
+                "y": -95.0
+            },
+            "sizeDelta": {
+                "x": 283.4562072753906,
+                "y": 38.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 28,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.05000000074505806,
+                "g": 0.03500000014901161,
+                "b": 0.019999999552965165,
+                "a": 1.0
+            },
+            "alignment": 3,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "RulesBody",
+            "text": "- No dejes entrar a\n  imitadores.\n\n- No dejes entrar a nadie\n  si tienes dudas.\n\n- Recursos limitados.\n  Prioriza tu supervivencia.\n\n- Confia en tu instinto,\n  pero verifica.",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 60.5,
+                "y": -152.0
+            },
+            "sizeDelta": {
+                "x": 265.0,
+                "y": 290.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 22,
+            "fontStyle": 0,
+            "color": {
+                "r": 0.05999999865889549,
+                "g": 0.04500000178813934,
+                "b": 0.029999999329447748,
+                "a": 1.0
+            },
+            "alignment": 0,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "HelpCard",
+            "text": "OBSERVA\nESCUCHA\nCUESTIONA\nDECIDE",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 114.0,
+                "y": -570.0
+            },
+            "sizeDelta": {
+                "x": 145.0,
+                "y": 150.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 28,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.05999999865889549,
+                "g": 0.04500000178813934,
+                "b": 0.029999999329447748,
+                "a": 1.0
+            },
+            "alignment": 4,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "ObservationsTitle",
+            "text": "OBSERVACIONES",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 1536.0999755859375,
+                "y": -75.0999984741211
+            },
+            "sizeDelta": {
+                "x": 250.0,
+                "y": 36.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 24,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.6200000047683716,
+                "g": 0.5400000214576721,
+                "b": 0.38999998569488528,
+                "a": 1.0
+            },
+            "alignment": 3,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "ObservationLabels",
+            "text": "Ropa mojada\n\nTemblor\n\nMirada evasiva\n\nHeridas visibles\n\nComportamiento\n\nRespuestas",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 1444.699951171875,
+                "y": -111.0999984741211
+            },
+            "sizeDelta": {
+                "x": 190.0,
+                "y": 250.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 20,
+            "fontStyle": 0,
+            "color": {
+                "r": 0.5799999833106995,
+                "g": 0.5,
+                "b": 0.3799999952316284,
+                "a": 1.0
+            },
+            "alignment": 0,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "ObservationValues",
+            "text": "SI\n\nNO\n\nSI\n\nNO\n\nNERVIOSO\n\nINCONSISTENTES",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 1659.0999755859375,
+                "y": -111.0999984741211
+            },
+            "sizeDelta": {
+                "x": 100.0,
+                "y": 250.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 20,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.7200000286102295,
+                "g": 0.5,
+                "b": 0.18000000715255738,
+                "a": 1.0
+            },
+            "alignment": 2,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "NotesTitle",
+            "text": "NOTAS",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 1444.699951171875,
+                "y": -348.6000061035156
+            },
+            "sizeDelta": {
+                "x": 120.0,
+                "y": 35.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 22,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.6200000047683716,
+                "g": 0.5400000214576721,
+                "b": 0.38999998569488528,
+                "a": 1.0
+            },
+            "alignment": 3,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "NotesBody",
+            "text": "La tercera persona\nmenciona la misma\nhistoria...",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 1444.699951171875,
+                "y": -383.6000061035156
+            },
+            "sizeDelta": {
+                "x": 260.0,
+                "y": 95.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 19,
+            "fontStyle": 0,
+            "color": {
+                "r": 0.5799999833106995,
+                "g": 0.5,
+                "b": 0.3799999952316284,
+                "a": 1.0
+            },
+            "alignment": 0,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "QuestionsTitleStatic",
+            "text": "PREGUNTAS",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 534.5,
+                "y": -622.4000244140625
+            },
+            "sizeDelta": {
+                "x": 220.0,
+                "y": 32.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 23,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.6200000047683716,
+                "g": 0.5400000214576721,
+                "b": 0.38999998569488528,
+                "a": 1.0
+            },
+            "alignment": 3,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "DialogueTitleStatic",
+            "text": "VISITANTE:",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 534.5,
+                "y": -505.6000061035156
+            },
+            "sizeDelta": {
+                "x": 180.0,
+                "y": 32.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 23,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.7200000286102295,
+                "g": 0.5,
+                "b": 0.18000000715255738,
+                "a": 1.0
+            },
+            "alignment": 3,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "AllowButtonLabel",
+            "text": "PERMITIR",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 1316.5,
+                "y": -689.0
+            },
+            "sizeDelta": {
+                "x": 104.0,
+                "y": 31.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 17,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.6200000047683716,
+                "g": 0.5400000214576721,
+                "b": 0.38999998569488528,
+                "a": 1.0
+            },
+            "alignment": 4,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "RejectButtonLabel",
+            "text": "NO PERMITIR",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 1462.0,
+                "y": -689.0
+            },
+            "sizeDelta": {
+                "x": 117.0,
+                "y": 31.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 16,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.6200000047683716,
+                "g": 0.5400000214576721,
+                "b": 0.38999998569488528,
+                "a": 1.0
+            },
+            "alignment": 4,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "DecisionWarningStatic",
+            "text": "UNA DECISION PUEDE\nCAMBIARLO TODO",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 1472.0,
+                "y": -779.0
+            },
+            "sizeDelta": {
+                "x": 220.0,
+                "y": 55.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 19,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.7200000286102295,
+                "g": 0.5,
+                "b": 0.18000000715255738,
+                "a": 1.0
+            },
+            "alignment": 4,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "NightStatic",
+            "text": "NOCHE 1",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 42.0,
+                "y": -32.0
+            },
+            "sizeDelta": {
+                "x": 135.0,
+                "y": 34.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 22,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.6200000047683716,
+                "g": 0.5400000214576721,
+                "b": 0.38999998569488528,
+                "a": 1.0
+            },
+            "alignment": 4,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        },
+        {
+            "name": "ClockStatic",
+            "text": "01:47 AM",
+            "anchorMin": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchorMax": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pivot": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "anchoredPosition": {
+                "x": 220.0,
+                "y": -32.0
+            },
+            "sizeDelta": {
+                "x": 120.0,
+                "y": 34.0
+            },
+            "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "localRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "fontSize": 22,
+            "fontStyle": 1,
+            "color": {
+                "r": 0.6200000047683716,
+                "g": 0.5400000214576721,
+                "b": 0.38999998569488528,
+                "a": 1.0
+            },
+            "alignment": 4,
+            "horizontalOverflow": 0,
+            "verticalOverflow": 0
+        }
+    ]
+}
