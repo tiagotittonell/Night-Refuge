@@ -117,6 +117,13 @@ public class DecisionController : MonoBehaviour
 
         RecordVisitorDecision(visitor, accepted);
 
+        // Consume clock time for making a decision
+        NightClock clock = Object.FindFirstObjectByType<NightClock>();
+        if (clock != null)
+        {
+            clock.ConsumeDecision();
+        }
+
         yield return new WaitForSeconds(decisionFeedbackSeconds);
 
         bool canContinue = nightManager.RegisterDecision(visitor, accepted);

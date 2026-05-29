@@ -27,6 +27,7 @@ public class NightManager : MonoBehaviour
     private bool gameEnded;
     private SuspicionSystem suspicionSystem;
     private InterEventSystem interEventSystem;
+    private NightClock nightClock;
 
     public int CurrentNightNumber => currentNightIndex + 1;
 
@@ -84,6 +85,13 @@ public class NightManager : MonoBehaviour
             interEventSystem = eventObject.AddComponent<InterEventSystem>();
             eventObject.AddComponent<InterEventUI>();
         }
+
+        nightClock = Object.FindFirstObjectByType<NightClock>();
+        if (nightClock == null)
+        {
+            GameObject clockObject = new GameObject("NightClock");
+            nightClock = clockObject.AddComponent<NightClock>();
+        }
     }
 
     public void StartNextNight()
@@ -99,6 +107,11 @@ public class NightManager : MonoBehaviour
         NightData night = nights[currentNightIndex];
         currentSummary.Reset(currentNightIndex + 1);
         UpdateNightHeader(night, currentNightIndex + 1);
+
+        if (nightClock != null)
+        {
+            nightClock.StartNight(night.clockTime);
+        }
 
         if (suspicionSystem != null)
         {
@@ -202,6 +215,11 @@ public class NightManager : MonoBehaviour
             interEvent.moraleChange,
             interEvent.populationChange);
 
+        if (nightClock != null)
+        {
+            nightClock.ConsumeInterEvent();
+        }
+
         interEventSystem.NotifyEventTriggered(interEvent);
     }
 
@@ -209,6 +227,11 @@ public class NightManager : MonoBehaviour
     {
         if (visitorManager != null && visitorManager.ShowNextVisitor())
         {
+            if (nightClock != null)
+            {
+                nightClock.ConsumeVisitorArrival();
+            }
+
             return true;
         }
 

@@ -91,6 +91,13 @@ public class QuestionUI : MonoBehaviour
             dialogueUI.ShowAnswer(questionAnswer.answer);
         }
 
+        // Consume clock time for asking a question
+        NightClock clock = Object.FindFirstObjectByType<NightClock>();
+        if (clock != null)
+        {
+            clock.ConsumeQuestion();
+        }
+
         QuestionAnswered?.Invoke(questionAnswer);
 
         if (questionsRemaining <= 0)
