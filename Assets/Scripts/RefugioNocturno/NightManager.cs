@@ -27,6 +27,8 @@ public class NightManager : MonoBehaviour
     private bool gameEnded;
     private SuspicionSystem suspicionSystem;
 
+    public int CurrentNightNumber => currentNightIndex + 1;
+
     private void Awake()
     {
         if (endNightSummaryUI != null)
@@ -38,6 +40,7 @@ public class NightManager : MonoBehaviour
     private void Start()
     {
         EnsureSuspicionSystem();
+        EnsureVisitorLog();
 
         if (createExampleDataOnStart && nights.Count == 0)
         {
@@ -55,6 +58,22 @@ public class NightManager : MonoBehaviour
             GameObject systemObject = new GameObject("SuspicionSystem");
             suspicionSystem = systemObject.AddComponent<SuspicionSystem>();
             systemObject.AddComponent<SuspicionUI>();
+            systemObject.AddComponent<ContradictionFeedbackUI>();
+        }
+        else if (Object.FindFirstObjectByType<ContradictionFeedbackUI>() == null)
+        {
+            suspicionSystem.gameObject.AddComponent<ContradictionFeedbackUI>();
+        }
+    }
+
+    private void EnsureVisitorLog()
+    {
+        VisitorLog log = Object.FindFirstObjectByType<VisitorLog>();
+        if (log == null)
+        {
+            GameObject logObject = new GameObject("VisitorLog");
+            logObject.AddComponent<VisitorLog>();
+            logObject.AddComponent<VisitorLogUI>();
         }
     }
 

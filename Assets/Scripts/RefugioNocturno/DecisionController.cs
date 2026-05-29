@@ -15,6 +15,8 @@ public class DecisionController : MonoBehaviour
     [SerializeField] private float decisionFeedbackSeconds = 1.25f;
 
     private bool resolvingDecision;
+    private VisitorLog visitorLog;
+    private SuspicionSystem suspicionSystem;
 
     private void Awake()
     {
@@ -27,6 +29,9 @@ public class DecisionController : MonoBehaviour
         {
             rejectButton.onClick.AddListener(RejectCurrentVisitor);
         }
+
+        visitorLog = Object.FindFirstObjectByType<VisitorLog>();
+        suspicionSystem = Object.FindFirstObjectByType<SuspicionSystem>();
     }
 
     public void SetInteractable(bool interactable)
@@ -110,6 +115,8 @@ public class DecisionController : MonoBehaviour
             dialogueUI.ShowDecisionFeedback(GetDecisionFeedback(visitor, accepted));
         }
 
+        RecordVisitorDecision(visitor, accepted);
+
         yield return new WaitForSeconds(decisionFeedbackSeconds);
 
         bool canContinue = nightManager.RegisterDecision(visitor, accepted);
@@ -119,6 +126,42 @@ public class DecisionController : MonoBehaviour
         {
             SetInteractable(true);
         }
+    }
+
+    private void RecordVisitorDecision(VisitorData visitor, bool accepted)
+    {
+        if (visitorLog == null)
+        {
+            visitorLog = Object.FindFirstObjectByType<VisitorLog>();
+        }
+
+        if (visitorLog == null)
+        {
+            return;
+        }
+
+        if (suspicionSystem == null)
+        {
+            suspicionSystem = Object.FindFirstObjectByType<SuspicionSystem>();
+        }
+
+        SuspicionLevel suspicion = suspicionSystem != null
+            ? suspicionSystem.CurrentLevel
+            : SuspicionLevel.Unknown;
+
+        VisitorRecord record = new VisitorRecord(
+            nightManager != null ? nightManager.CurrentNightNumber : 1,
+            visitor.visitorName,
+            accepted,
+            suspicion);
+
+        if (visitor.visualClues != null)
+        {
+            record.observedClues.AddRange(visitor.visualClues);
+        }
+
+        record.decisionFeedback = GetDecisionFeedback(visitor, accepted);
+        visitorLog.RegisterVisitor(record);
     }
 
     private string GetDecisionFeedback(VisitorData visitor, bool accepted)
