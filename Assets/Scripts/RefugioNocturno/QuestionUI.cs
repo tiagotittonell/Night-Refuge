@@ -92,7 +92,7 @@ public class QuestionUI : MonoBehaviour
         }
 
         // Consume clock time for asking a question
-        NightClock clock = Object.FindFirstObjectByType<NightClock>();
+        NightClock clock = UnityEngine.Object.FindFirstObjectByType<NightClock>();
         if (clock != null)
         {
             clock.ConsumeQuestion();
