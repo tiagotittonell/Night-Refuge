@@ -11,9 +11,44 @@ public class VisitorManager : MonoBehaviour
 
     private List<VisitorData> visitors = new List<VisitorData>();
     private int currentVisitorIndex = -1;
+    private SuspicionSystem suspicionSystem;
 
     public VisitorData CurrentVisitor { get; private set; }
     public bool HasActiveVisitor => CurrentVisitor != null;
+
+    private void Awake()
+    {
+        suspicionSystem = Object.FindFirstObjectByType<SuspicionSystem>();
+    }
+
+    private void OnEnable()
+    {
+        if (questionUI != null)
+        {
+            questionUI.QuestionAnswered += OnQuestionAnswered;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (questionUI != null)
+        {
+            questionUI.QuestionAnswered -= OnQuestionAnswered;
+        }
+    }
+
+    private void OnQuestionAnswered(QuestionAnswer qa)
+    {
+        if (suspicionSystem == null)
+        {
+            suspicionSystem = Object.FindFirstObjectByType<SuspicionSystem>();
+        }
+
+        if (suspicionSystem != null)
+        {
+            suspicionSystem.OnQuestionAnswered(qa);
+        }
+    }
 
     public void LoadVisitors(List<VisitorData> nightVisitors)
     {
@@ -59,6 +94,16 @@ public class VisitorManager : MonoBehaviour
         {
             questionUI.SetupQuestions(CurrentVisitor);
         }
+
+        if (suspicionSystem == null)
+        {
+            suspicionSystem = Object.FindFirstObjectByType<SuspicionSystem>();
+        }
+
+        if (suspicionSystem != null)
+        {
+            suspicionSystem.EvaluateVisitor(CurrentVisitor);
+        }
     }
 
     private void ClearVisitorUI()
@@ -76,6 +121,16 @@ public class VisitorManager : MonoBehaviour
         if (questionUI != null)
         {
             questionUI.SetupQuestions(null);
+        }
+
+        if (suspicionSystem == null)
+        {
+            suspicionSystem = Object.FindFirstObjectByType<SuspicionSystem>();
+        }
+
+        if (suspicionSystem != null)
+        {
+            suspicionSystem.Clear();
         }
     }
 }

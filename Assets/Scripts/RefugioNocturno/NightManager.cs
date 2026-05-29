@@ -25,6 +25,7 @@ public class NightManager : MonoBehaviour
     private int currentNightIndex = -1;
     private NightSummary currentSummary;
     private bool gameEnded;
+    private SuspicionSystem suspicionSystem;
 
     private void Awake()
     {
@@ -36,12 +37,25 @@ public class NightManager : MonoBehaviour
 
     private void Start()
     {
+        EnsureSuspicionSystem();
+
         if (createExampleDataOnStart && nights.Count == 0)
         {
             nights = ExampleVisitorFactory.CreateExampleNights();
         }
 
         StartNextNight();
+    }
+
+    private void EnsureSuspicionSystem()
+    {
+        suspicionSystem = Object.FindFirstObjectByType<SuspicionSystem>();
+        if (suspicionSystem == null)
+        {
+            GameObject systemObject = new GameObject("SuspicionSystem");
+            suspicionSystem = systemObject.AddComponent<SuspicionSystem>();
+            systemObject.AddComponent<SuspicionUI>();
+        }
     }
 
     public void StartNextNight()
@@ -57,6 +71,11 @@ public class NightManager : MonoBehaviour
         NightData night = nights[currentNightIndex];
         currentSummary.Reset(currentNightIndex + 1);
         UpdateNightHeader(night, currentNightIndex + 1);
+
+        if (suspicionSystem != null)
+        {
+            suspicionSystem.SetNightRule(night.suspicionRule);
+        }
 
         if (rulePanel != null)
         {
@@ -296,5 +315,6 @@ public class NightData
     public string clockTime;
     [TextArea(2, 4)]
     public string rule;
+    public NightRuleData suspicionRule;
     public List<VisitorData> visitors = new List<VisitorData>();
 }

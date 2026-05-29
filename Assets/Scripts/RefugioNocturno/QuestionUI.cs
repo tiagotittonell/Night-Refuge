@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class QuestionUI : MonoBehaviour
 
     [Header("Reglas")]
     [SerializeField] private int maxQuestionsPerVisitor = 2;
+
+    public event Action<QuestionAnswer> QuestionAnswered;
 
     private readonly List<Button> spawnedButtons = new List<Button>();
     private int questionsRemaining;
@@ -87,6 +90,8 @@ public class QuestionUI : MonoBehaviour
         {
             dialogueUI.ShowAnswer(questionAnswer.answer);
         }
+
+        QuestionAnswered?.Invoke(questionAnswer);
 
         if (questionsRemaining <= 0)
         {

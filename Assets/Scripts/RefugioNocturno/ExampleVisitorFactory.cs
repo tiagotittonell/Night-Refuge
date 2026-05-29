@@ -12,6 +12,13 @@ public static class ExampleVisitorFactory
                 nightLabel = "NOCHE 1",
                 clockTime = "01:47 AM",
                 rule = "Los imitadores suelen contradecirse, pero algunos humanos tambien parecen nerviosos.",
+                suspicionRule = new NightRuleData
+                {
+                    description = "Los imitadores suelen contradecirse, pero algunos humanos tambien parecen nerviosos.",
+                    ruleType = NightRuleType.ImitatorsAvoidSpecificDetails,
+                    suspicionOnViolation = 2,
+                    reliefOnCompliance = 1
+                },
                 visitors = new List<VisitorData>
                 {
                     CreateVisitor(
@@ -22,9 +29,9 @@ public static class ExampleVisitorFactory
                         Obs("SI", "SI", "NO", "SI", "ASUSTADA", "COHERENTES"),
                         new[]
                         {
-                            QA("De donde venis?", "Del hospital viejo."),
-                            QA("Que paso afuera?", "No pude verlos bien, solo escuche pasos."),
-                            QA("Conoces a alguien dentro?", "Mi hermano deberia estar aca.")
+                            QA("De donde venis?", "Del hospital viejo.", ResponseTag.Coherent),
+                            QA("Que paso afuera?", "No pude verlos bien, solo escuche pasos.", ResponseTag.Coherent),
+                            QA("Conoces a alguien dentro?", "Mi hermano deberia estar aca.", ResponseTag.Coherent)
                         },
                         -1, 0, 1, 1,
                         0, 0, -2, 0,
@@ -38,9 +45,9 @@ public static class ExampleVisitorFactory
                         Obs("NO", "NO", "NO", "NO", "QUIETO", "REPETITIVAS"),
                         new[]
                         {
-                            QA("De donde venis?", "De afuera."),
-                            QA("Que paso afuera?", "Nada. Solo necesito entrar."),
-                            QA("Conoces a alguien dentro?", "Si. A todos.")
+                            QA("De donde venis?", "De afuera.", ResponseTag.Evasive),
+                            QA("Que paso afuera?", "Nada. Solo necesito entrar.", ResponseTag.Evasive),
+                            QA("Conoces a alguien dentro?", "Si. A todos.", ResponseTag.Contradictory)
                         },
                         0, -3, -1, 0,
                         0, 1, 0, 0,
@@ -54,9 +61,9 @@ public static class ExampleVisitorFactory
                         Obs("SI", "NO", "SI", "NO", "NERVIOSA", "COHERENTES"),
                         new[]
                         {
-                            QA("De donde venis?", "De la estacion."),
-                            QA("Que paso afuera?", "El camino esta bloqueado."),
-                            QA("Por que necesitas entrar?", "Tengo informacion sobre los imitadores.")
+                            QA("De donde venis?", "De la estacion.", ResponseTag.Coherent),
+                            QA("Que paso afuera?", "El camino esta bloqueado.", ResponseTag.Coherent),
+                            QA("Por que necesitas entrar?", "Tengo informacion sobre los imitadores.", ResponseTag.Coherent)
                         },
                         -1, 1, 0, 1,
                         0, -1, -1, 0,
@@ -70,9 +77,9 @@ public static class ExampleVisitorFactory
                         Obs("NO", "NO", "NO", "NO", "CALMO", "INCONSISTENTES"),
                         new[]
                         {
-                            QA("De donde venis?", "Del refugio norte."),
-                            QA("Que paso afuera?", "Nada importante."),
-                            QA("Conoces a alguien dentro?", "Conozco a Elena.")
+                            QA("De donde venis?", "Del refugio norte.", ResponseTag.Coherent),
+                            QA("Que paso afuera?", "Nada importante.", ResponseTag.Evasive),
+                            QA("Conoces a alguien dentro?", "Conozco a Elena.", ResponseTag.Contradictory)
                         },
                         -1, -2, 0, 0,
                         0, 1, 0, 0,
@@ -85,6 +92,13 @@ public static class ExampleVisitorFactory
                 nightLabel = "NOCHE 2",
                 clockTime = "03:12 AM",
                 rule = "Esta noche los imitadores evitan nombres propios. No todos los heridos son peligrosos.",
+                suspicionRule = new NightRuleData
+                {
+                    description = "Los imitadores evitan nombres propios. No todos los heridos son peligrosos.",
+                    ruleType = NightRuleType.ImitatorsAvoidProperNames,
+                    suspicionOnViolation = 3,
+                    reliefOnCompliance = 1
+                },
                 visitors = new List<VisitorData>
                 {
                     CreateVisitor(
@@ -95,9 +109,9 @@ public static class ExampleVisitorFactory
                         Obs("SI", "NO", "NO", "SI", "AGITADA", "COHERENTES"),
                         new[]
                         {
-                            QA("De donde venis?", "Del puesto de guardia de San Mateo."),
-                            QA("Que recordas antes de llegar?", "La sirena, despues la lluvia y una puerta golpeando."),
-                            QA("Conoces a alguien dentro?", "A Ruben, el enfermero.")
+                            QA("De donde venis?", "Del puesto de guardia de San Mateo.", ResponseTag.Coherent),
+                            QA("Que recordas antes de llegar?", "La sirena, despues la lluvia y una puerta golpeando.", ResponseTag.Coherent),
+                            QA("Conoces a alguien dentro?", "A Ruben, el enfermero.", ResponseTag.Coherent)
                         },
                         -1, 1, 1, 1,
                         0, 0, -2, 0,
@@ -111,9 +125,9 @@ public static class ExampleVisitorFactory
                         Obs("NO", "NO", "NO", "NO", "EXTRANIO", "EVASIVAS"),
                         new[]
                         {
-                            QA("De donde venis?", "De donde vienen todos."),
-                            QA("Que paso afuera?", "La noche paso."),
-                            QA("Conoces a alguien dentro?", "Conozco sus voces.")
+                            QA("De donde venis?", "De donde vienen todos.", ResponseTag.Evasive),
+                            QA("Que paso afuera?", "La noche paso.", ResponseTag.Evasive),
+                            QA("Conoces a alguien dentro?", "Conozco sus voces.", ResponseTag.Dangerous)
                         },
                         -1, -3, -2, 0,
                         0, 1, 0, 0,
@@ -127,9 +141,9 @@ public static class ExampleVisitorFactory
                         Obs("SI", "SI", "SI", "NO", "ASUSTADO", "COHERENTES"),
                         new[]
                         {
-                            QA("De donde venis?", "De las casas bajas, cerca del puente."),
-                            QA("Que paso afuera?", "Alguien imitaba la voz de mi madre."),
-                            QA("Por que necesitas entrar?", "No puedo seguir corriendo.")
+                            QA("De donde venis?", "De las casas bajas, cerca del puente.", ResponseTag.Coherent),
+                            QA("Que paso afuera?", "Alguien imitaba la voz de mi madre.", ResponseTag.Coherent),
+                            QA("Por que necesitas entrar?", "No puedo seguir corriendo.", ResponseTag.Coherent)
                         },
                         -1, 0, 1, 1,
                         0, 0, -1, 0,
@@ -143,9 +157,9 @@ public static class ExampleVisitorFactory
                         Obs("SI", "NO", "NO", "NO", "REPETITIVA", "INCONSISTENTES"),
                         new[]
                         {
-                            QA("De donde venis?", "Clara viene de Clara."),
-                            QA("Que recordas antes de llegar?", "Entrar. Entrar. Entrar."),
-                            QA("Conoces a alguien dentro?", "A Elena. A Tomas. A todos.")
+                            QA("De donde venis?", "Clara viene de Clara.", ResponseTag.Contradictory),
+                            QA("Que recordas antes de llegar?", "Entrar. Entrar. Entrar.", ResponseTag.Dangerous),
+                            QA("Conoces a alguien dentro?", "A Elena. A Tomas. A todos.", ResponseTag.Contradictory)
                         },
                         0, -4, -1, 0,
                         0, 1, 1, 0,
@@ -208,12 +222,13 @@ public static class ExampleVisitorFactory
         };
     }
 
-    private static QuestionAnswer QA(string question, string answer)
+    private static QuestionAnswer QA(string question, string answer, ResponseTag tag = ResponseTag.Unknown)
     {
         return new QuestionAnswer
         {
             question = question,
-            answer = answer
+            answer = answer,
+            responseTag = tag
         };
     }
 
