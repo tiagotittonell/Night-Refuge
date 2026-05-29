@@ -26,6 +26,7 @@ public class NightManager : MonoBehaviour
     private NightSummary currentSummary;
     private bool gameEnded;
     private SuspicionSystem suspicionSystem;
+    private InterEventSystem interEventSystem;
 
     public int CurrentNightNumber => currentNightIndex + 1;
 
@@ -75,6 +76,14 @@ public class NightManager : MonoBehaviour
             logObject.AddComponent<VisitorLog>();
             logObject.AddComponent<VisitorLogUI>();
         }
+
+        interEventSystem = Object.FindFirstObjectByType<InterEventSystem>();
+        if (interEventSystem == null)
+        {
+            GameObject eventObject = new GameObject("InterEventSystem");
+            interEventSystem = eventObject.AddComponent<InterEventSystem>();
+            eventObject.AddComponent<InterEventUI>();
+        }
     }
 
     public void StartNextNight()
@@ -94,6 +103,11 @@ public class NightManager : MonoBehaviour
         if (suspicionSystem != null)
         {
             suspicionSystem.SetNightRule(night.suspicionRule);
+        }
+
+        if (interEventSystem != null)
+        {
+            interEventSystem.SetNightEvents(night);
         }
 
         if (rulePanel != null)
@@ -161,7 +175,34 @@ public class NightManager : MonoBehaviour
             return false;
         }
 
+        TryTriggerInterEvent(accepted);
+
         return ShowNextVisitorOrEndNight();
+    }
+
+    private void TryTriggerInterEvent(bool lastAccepted)
+    {
+        if (interEventSystem == null || refugeStats == null)
+        {
+            return;
+        }
+
+        interEventSystem.UpdateContext(lastAccepted, refugeStats.Security);
+        InterVisitorEvent interEvent = interEventSystem.TryGetNextEvent();
+
+        if (interEvent == null)
+        {
+            return;
+        }
+
+        // Apply resource effects
+        refugeStats.ApplyChanges(
+            interEvent.foodChange,
+            interEvent.securityChange,
+            interEvent.moraleChange,
+            interEvent.populationChange);
+
+        interEventSystem.NotifyEventTriggered(interEvent);
     }
 
     private bool ShowNextVisitorOrEndNight()
@@ -336,4 +377,5 @@ public class NightData
     public string rule;
     public NightRuleData suspicionRule;
     public List<VisitorData> visitors = new List<VisitorData>();
+    public List<InterVisitorEvent> interEvents = new List<InterVisitorEvent>();
 }

@@ -85,6 +85,25 @@ public static class ExampleVisitorFactory
                         0, 1, 0, 0,
                         "Andres sonrie al oir el cerrojo. Nadie del refugio norte contesta la radio.\nComida -1 | Seguridad -2",
                         "Andres espera demasiado quieto. Luego desaparece entre las luces.\nSeguridad +1")
+                },
+                interEvents = new List<InterVisitorEvent>
+                {
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.NoiseInDucts,
+                        narrativeText = "Un ruido metalico recorre los ductos. Alguien contiene la respiracion.",
+                        securityChange = 0,
+                        moraleChange = -1,
+                        probability = 0.7f
+                    },
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.IntermittentRadio,
+                        narrativeText = "La radio emite estatica. Por un momento, parece que alguien dice un nombre.",
+                        securityChange = 0,
+                        moraleChange = 0,
+                        probability = 0.5f
+                    }
                 }
             },
             new NightData
@@ -165,6 +184,33 @@ public static class ExampleVisitorFactory
                         0, 1, 1, 0,
                         "Clara entra repitiendo su nombre hasta que otros empiezan a repetirlo tambien.\nSeguridad -4 | Moral -1",
                         "Clara golpea el vidrio con el mismo ritmo exacto hasta alejarse.\nSeguridad +1 | Moral +1")
+                },
+                interEvents = new List<InterVisitorEvent>
+                {
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.ShelterProtest,
+                        narrativeText = "Alguien dentro del refugio grita: 'No dejen entrar a nadie mas!'",
+                        moraleChange = -1,
+                        probability = 0.6f
+                    },
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.PartialBlackout,
+                        narrativeText = "Las luces parpadean y se apagan un instante. Cuando vuelven, algo parece distinto.",
+                        securityChange = -1,
+                        probability = 0.5f,
+                        minSecurityToTrigger = 3
+                    },
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.AcceptedPersonInfo,
+                        narrativeText = "Alguien que dejaste entrar antes se acerca: 'El ultimo... no era como nosotros.'",
+                        securityChange = 0,
+                        moraleChange = 0,
+                        probability = 0.8f,
+                        requiresPreviousAccepted = true
+                    }
                 }
             }
         };
