@@ -53,7 +53,7 @@ public class InterVisitorEvent
 public class InterEventSystem : MonoBehaviour
 {
     [Header("Configuración")]
-    [SerializeField] private float eventDisplayDuration = 2.5f;
+    [SerializeField] private float eventDisplayDuration = 4.5f;
 
     public event Action<InterVisitorEvent> EventTriggered;
     public event Action EventDismissed;

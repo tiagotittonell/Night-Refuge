@@ -14,7 +14,7 @@ public class ContradictionFeedbackUI : MonoBehaviour
     [SerializeField] private Text feedbackLegacyText;
 
     [Header("Configuración")]
-    [SerializeField] private float displayDuration = 2.5f;
+    [SerializeField] private float displayDuration = 4.0f;
     [SerializeField] private Color contradictionColor = new Color(0.9f, 0.45f, 0.2f, 1f);
     [SerializeField] private Color evasiveColor = new Color(0.7f, 0.6f, 0.3f, 1f);
     [SerializeField] private Color dangerousColor = new Color(0.85f, 0.15f, 0.15f, 1f);

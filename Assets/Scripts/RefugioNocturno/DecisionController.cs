@@ -12,7 +12,7 @@ public class DecisionController : MonoBehaviour
     [SerializeField] private QuestionUI questionUI;
     [SerializeField] private Button allowButton;
     [SerializeField] private Button rejectButton;
-    [SerializeField] private float decisionFeedbackSeconds = 1.25f;
+    [SerializeField] private float decisionFeedbackSeconds = 3.5f;
 
     private bool resolvingDecision;
     private VisitorLog visitorLog;
