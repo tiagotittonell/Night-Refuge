@@ -131,11 +131,11 @@ public class UpgradeShopUI : MonoBehaviour
         rect.anchorMin = new Vector2(0f, 1f);
         rect.anchorMax = new Vector2(1f, 1f);
         rect.pivot = new Vector2(0.5f, 1f);
-        rect.sizeDelta = new Vector2(0f, 50f);
+        rect.sizeDelta = new Vector2(0f, 60f);
 
         LayoutElement layout = buttonObject.AddComponent<LayoutElement>();
-        layout.minHeight = 50f;
-        layout.preferredHeight = 50f;
+        layout.minHeight = 60f;
+        layout.preferredHeight = 60f;
 
         Image image = buttonObject.GetComponent<Image>();
         Sprite btnSprite = canAfford ? UISpriteLoader.ButtonNormal : UISpriteLoader.ButtonDisabled;
@@ -181,8 +181,8 @@ public class UpgradeShopUI : MonoBehaviour
             iconRect.anchorMin = new Vector2(0f, 0.5f);
             iconRect.anchorMax = new Vector2(0f, 0.5f);
             iconRect.pivot = new Vector2(0f, 0.5f);
-            iconRect.anchoredPosition = new Vector2(6f, 0f);
-            iconRect.sizeDelta = new Vector2(36f, 36f);
+            iconRect.anchoredPosition = new Vector2(8f, 0f);
+            iconRect.sizeDelta = new Vector2(48f, 48f);
 
             Image iconImage = iconObj.GetComponent<Image>();
             iconImage.sprite = upgradeIcon;
@@ -191,7 +191,7 @@ public class UpgradeShopUI : MonoBehaviour
         }
 
         // Label (offset to the right if icon present)
-        float labelLeft = upgradeIcon != null ? 48f : 12f;
+        float labelLeft = upgradeIcon != null ? 64f : 12f;
         GameObject textObject = new GameObject("Label", typeof(RectTransform), typeof(Text));
         textObject.transform.SetParent(buttonObject.transform, false);
 
@@ -202,8 +202,8 @@ public class UpgradeShopUI : MonoBehaviour
         textRect.offsetMax = new Vector2(-12f, -2f);
 
         Text label = textObject.GetComponent<Text>();
-        label.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 15);
-        label.fontSize = 15;
+        label.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 18);
+        label.fontSize = 18;
         label.color = canAfford
             ? new Color(0.78f, 0.70f, 0.58f, 1f)
             : new Color(0.5f, 0.45f, 0.4f, 0.7f);
@@ -374,42 +374,24 @@ public class UpgradeShopUI : MonoBehaviour
 
         suppliesLegacyText = suppliesLabel;
 
-        // Upgrades list text
-        GameObject listObj = new GameObject("UpgradesListText", typeof(RectTransform), typeof(Text));
-        listObj.transform.SetParent(panel.transform, false);
-
-        RectTransform listRect = listObj.GetComponent<RectTransform>();
-        listRect.anchorMin = new Vector2(0f, 0.15f);
-        listRect.anchorMax = new Vector2(0.55f, 0.88f);
-        listRect.offsetMin = new Vector2(30f, 0f);
-        listRect.offsetMax = new Vector2(0f, 0f);
-
-        Text listLabel = listObj.GetComponent<Text>();
-        listLabel.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 16);
-        listLabel.fontSize = 16;
-        listLabel.color = new Color(0.70f, 0.63f, 0.52f, 1f);
-        listLabel.alignment = TextAnchor.UpperLeft;
-        listLabel.raycastTarget = false;
-
-        upgradesListLegacyText = listLabel;
-
-        // Buttons container
+        // Buttons container (full width, centered)
         GameObject containerObj = new GameObject("UpgradeButtonsContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
         containerObj.transform.SetParent(panel.transform, false);
 
         RectTransform containerRect = containerObj.GetComponent<RectTransform>();
-        containerRect.anchorMin = new Vector2(0.57f, 0.15f);
-        containerRect.anchorMax = new Vector2(0.97f, 0.88f);
+        containerRect.anchorMin = new Vector2(0.05f, 0.12f);
+        containerRect.anchorMax = new Vector2(0.95f, 0.87f);
         containerRect.offsetMin = Vector2.zero;
         containerRect.offsetMax = Vector2.zero;
 
         VerticalLayoutGroup vlg = containerObj.GetComponent<VerticalLayoutGroup>();
-        vlg.spacing = 6f;
+        vlg.spacing = 8f;
         vlg.childAlignment = TextAnchor.UpperCenter;
         vlg.childControlWidth = true;
         vlg.childControlHeight = false;
         vlg.childForceExpandWidth = true;
         vlg.childForceExpandHeight = false;
+        vlg.padding = new RectOffset(20, 20, 10, 10);
 
         buttonsContainer = containerObj.transform;
 

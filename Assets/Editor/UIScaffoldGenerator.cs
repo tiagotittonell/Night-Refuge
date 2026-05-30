@@ -298,23 +298,24 @@ public class UIScaffoldGenerator : EditorWindow
             panelImage.color = new Color(0.04f, 0.035f, 0.03f, 0.97f);
         }
 
-        // Buttons container placeholder
+        // Buttons container placeholder (full width)
         GameObject containerObj = new GameObject("UpgradeButtonsContainer", typeof(RectTransform), typeof(VerticalLayoutGroup));
         containerObj.transform.SetParent(panel.transform, false);
 
         RectTransform containerRect = containerObj.GetComponent<RectTransform>();
-        containerRect.anchorMin = new Vector2(0.57f, 0.15f);
-        containerRect.anchorMax = new Vector2(0.97f, 0.88f);
+        containerRect.anchorMin = new Vector2(0.05f, 0.12f);
+        containerRect.anchorMax = new Vector2(0.95f, 0.87f);
         containerRect.offsetMin = Vector2.zero;
         containerRect.offsetMax = Vector2.zero;
 
         VerticalLayoutGroup vlg = containerObj.GetComponent<VerticalLayoutGroup>();
-        vlg.spacing = 6f;
+        vlg.spacing = 8f;
         vlg.childAlignment = TextAnchor.UpperCenter;
         vlg.childControlWidth = true;
         vlg.childControlHeight = false;
         vlg.childForceExpandWidth = true;
         vlg.childForceExpandHeight = false;
+        vlg.padding = new RectOffset(20, 20, 10, 10);
 
         // Continue button
         GameObject btnObj = new GameObject("UpgradeShopContinueButton", typeof(RectTransform), typeof(Image), typeof(Button));
