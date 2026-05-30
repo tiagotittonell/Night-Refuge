@@ -30,7 +30,7 @@ public class QuestionUI : MonoBehaviour
     {
         EnsureRuntimeBindings();
         ClearButtons();
-        questionsRemaining = maxQuestionsPerVisitor;
+        questionsRemaining = maxQuestionsPerVisitor + GetBonusQuestions();
         UpdateRemainingText();
 
         if (visitor == null || questionsContainer == null)
@@ -134,6 +134,29 @@ public class QuestionUI : MonoBehaviour
         }
 
         spawnedButtons.Clear();
+    }
+
+    private int GetBonusQuestions()
+    {
+        UpgradeManager upgradeManager = UnityEngine.Object.FindFirstObjectByType<UpgradeManager>();
+        if (upgradeManager == null)
+        {
+            return 0;
+        }
+
+        int bonus = 0;
+
+        if (upgradeManager.HasUpgrade(UpgradeEffect.ExtraQuestion))
+        {
+            bonus += upgradeManager.GetUpgradeValue(UpgradeEffect.ExtraQuestion);
+        }
+
+        if (upgradeManager.HasUpgrade(UpgradeEffect.OperatorCoffee))
+        {
+            bonus += 1;
+        }
+
+        return bonus;
     }
 
     private void EnsureRuntimeBindings()

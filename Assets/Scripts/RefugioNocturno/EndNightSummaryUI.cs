@@ -11,6 +11,7 @@ public class EndNightSummaryUI : MonoBehaviour
     [SerializeField] private Button continueButton;
 
     private NightManager nightManager;
+    private bool lastHasNextNight;
 
     private void Awake()
     {
@@ -39,8 +40,20 @@ public class EndNightSummaryUI : MonoBehaviour
             panelRoot.transform.SetAsLastSibling();
         }
 
+        // Calculate and award supplies
+        int suppliesEarned = 0;
+        UpgradeManager upgradeManager = Object.FindFirstObjectByType<UpgradeManager>();
+        if (upgradeManager != null && hasNextNight)
+        {
+            suppliesEarned = upgradeManager.CalculateNightReward(summary, stats);
+            upgradeManager.AwardSupplies(suppliesEarned);
+        }
+
         string result = string.IsNullOrWhiteSpace(overrideResult) ? GetResultText(stats) : overrideResult;
         string header = string.IsNullOrWhiteSpace(title) ? $"Fin de la noche {summary.nightNumber}" : title;
+        string suppliesLine = hasNextNight && suppliesEarned > 0
+            ? $"\nSuministros ganados: +{suppliesEarned}\n"
+            : "";
         string summaryTextValue =
             $"{header}\n\n" +
             $"Humanos aceptados: {summary.humansAccepted}\n" +
@@ -50,7 +63,8 @@ public class EndNightSummaryUI : MonoBehaviour
             $"Comida restante: {stats.Food}\n" +
             $"Seguridad: {stats.Security}\n" +
             $"Moral: {stats.Morale}\n" +
-            $"Poblacion: {stats.Population}\n\n" +
+            $"Poblacion: {stats.Population}\n" +
+            $"{suppliesLine}\n" +
             $"Resultado general: {result}";
 
         if (summaryText != null)
@@ -67,6 +81,8 @@ public class EndNightSummaryUI : MonoBehaviour
         {
             continueButton.gameObject.SetActive(hasNextNight);
         }
+
+        lastHasNextNight = hasNextNight;
     }
 
     public void Hide()
@@ -80,6 +96,33 @@ public class EndNightSummaryUI : MonoBehaviour
     private void Continue()
     {
         Hide();
+
+        if (!lastHasNextNight)
+        {
+            return;
+        }
+
+        // Try to open upgrade shop between nights
+        UpgradeShopUI shop = Object.FindFirstObjectByType<UpgradeShopUI>();
+        if (shop != null)
+        {
+            shop.ShopClosed -= OnShopClosed;
+            shop.ShopClosed += OnShopClosed;
+            shop.Show();
+        }
+        else if (nightManager != null)
+        {
+            nightManager.StartNextNight();
+        }
+    }
+
+    private void OnShopClosed()
+    {
+        UpgradeShopUI shop = Object.FindFirstObjectByType<UpgradeShopUI>();
+        if (shop != null)
+        {
+            shop.ShopClosed -= OnShopClosed;
+        }
 
         if (nightManager != null)
         {

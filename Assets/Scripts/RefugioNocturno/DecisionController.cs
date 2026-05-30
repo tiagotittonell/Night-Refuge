@@ -90,9 +90,27 @@ public class DecisionController : MonoBehaviour
 
         if (accepted)
         {
+            int securityChange = visitor.securityChangeOnAccept;
+            int foodChange = visitor.foodChangeOnAccept;
+
+            // Cerradura reforzada: reduce daño de seguridad
+            UpgradeManager upgrades = Object.FindFirstObjectByType<UpgradeManager>();
+            if (upgrades != null && securityChange < 0 && upgrades.HasUpgrade(UpgradeEffect.ReinforcedLock))
+            {
+                securityChange += upgrades.GetUpgradeValue(UpgradeEffect.ReinforcedLock);
+                if (securityChange > 0) securityChange = 0;
+            }
+
+            // Racionamiento: reduce comida consumida
+            if (upgrades != null && foodChange < 0 && upgrades.HasUpgrade(UpgradeEffect.Rationing))
+            {
+                foodChange += upgrades.GetUpgradeValue(UpgradeEffect.Rationing);
+                if (foodChange > 0) foodChange = 0;
+            }
+
             refugeStats.ApplyChanges(
-                visitor.foodChangeOnAccept,
-                visitor.securityChangeOnAccept,
+                foodChange,
+                securityChange,
                 visitor.moraleChangeOnAccept,
                 visitor.populationChangeOnAccept);
         }

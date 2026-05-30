@@ -92,6 +92,23 @@ public class NightManager : MonoBehaviour
             GameObject clockObject = new GameObject("NightClock");
             nightClock = clockObject.AddComponent<NightClock>();
         }
+
+        UpgradeManager upgradeManager = Object.FindFirstObjectByType<UpgradeManager>();
+        if (upgradeManager == null)
+        {
+            GameObject upgradeObject = new GameObject("UpgradeManager");
+            upgradeManager = upgradeObject.AddComponent<UpgradeManager>();
+            UpgradeShopUI shop = upgradeObject.AddComponent<UpgradeShopUI>();
+            shop.Initialize(this);
+        }
+        else
+        {
+            UpgradeShopUI shop = Object.FindFirstObjectByType<UpgradeShopUI>();
+            if (shop != null)
+            {
+                shop.Initialize(this);
+            }
+        }
     }
 
     public void StartNextNight()
