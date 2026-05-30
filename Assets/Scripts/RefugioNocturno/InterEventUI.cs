@@ -62,6 +62,25 @@ public class InterEventUI : MonoBehaviour
         if (panelRoot != null)
         {
             panelRoot.SetActive(true);
+
+            // Apply event-specific background
+            Image panelImage = panelRoot.GetComponent<Image>();
+            if (panelImage != null)
+            {
+                Sprite eventBg = UISpriteLoader.GetEventBackground(interEvent.eventType);
+                if (eventBg != null)
+                {
+                    panelImage.sprite = eventBg;
+                    panelImage.type = Image.Type.Simple;
+                    panelImage.preserveAspect = false;
+                    panelImage.color = new Color(1f, 1f, 1f, 0.92f);
+                }
+                else
+                {
+                    panelImage.sprite = null;
+                    panelImage.color = new Color(0.05f, 0.04f, 0.03f, 0.92f);
+                }
+            }
         }
 
         bool isDangerous = interEvent.securityChange < 0 || interEvent.moraleChange < -1;

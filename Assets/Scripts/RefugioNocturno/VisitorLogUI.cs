@@ -160,6 +160,10 @@ public class VisitorLogUI : MonoBehaviour
             {
                 panelRoot = existing;
             }
+            else
+            {
+                CreateFallbackPanel();
+            }
         }
 
         if (logTmpText == null && logLegacyText == null && panelRoot != null)
@@ -181,5 +185,103 @@ public class VisitorLogUI : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void CreateFallbackPanel()
+    {
+        GameObject dynamicLayer = GameObject.Find("DynamicGameplayLayer");
+        Canvas canvas = Object.FindFirstObjectByType<Canvas>();
+        Transform parent = dynamicLayer != null ? dynamicLayer.transform
+            : canvas != null ? canvas.transform : transform;
+
+        // Panel root
+        GameObject panel = new GameObject("VisitorLogPanel", typeof(RectTransform), typeof(Image));
+        panel.transform.SetParent(parent, false);
+
+        RectTransform panelRect = panel.GetComponent<RectTransform>();
+        panelRect.anchorMin = new Vector2(0.15f, 0.1f);
+        panelRect.anchorMax = new Vector2(0.85f, 0.9f);
+        panelRect.pivot = new Vector2(0.5f, 0.5f);
+        panelRect.anchoredPosition = Vector2.zero;
+        panelRect.sizeDelta = Vector2.zero;
+
+        Image panelImage = panel.GetComponent<Image>();
+        Sprite logBg = UISpriteLoader.LogBackground;
+        if (logBg != null)
+        {
+            panelImage.sprite = logBg;
+            panelImage.type = Image.Type.Sliced;
+            panelImage.color = Color.white;
+        }
+        else
+        {
+            panelImage.color = new Color(0.04f, 0.035f, 0.03f, 0.95f);
+        }
+
+        panelRoot = panel;
+
+        // Scrollable text
+        GameObject textObj = new GameObject("LogText", typeof(RectTransform), typeof(Text));
+        textObj.transform.SetParent(panel.transform, false);
+
+        RectTransform textRect = textObj.GetComponent<RectTransform>();
+        textRect.anchorMin = new Vector2(0f, 0.08f);
+        textRect.anchorMax = new Vector2(1f, 1f);
+        textRect.offsetMin = new Vector2(24f, 0f);
+        textRect.offsetMax = new Vector2(-24f, -16f);
+
+        Text logText = textObj.GetComponent<Text>();
+        logText.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 15);
+        logText.fontSize = 15;
+        logText.color = new Color(0.70f, 0.63f, 0.52f, 1f);
+        logText.alignment = TextAnchor.UpperLeft;
+        logText.raycastTarget = false;
+        logText.verticalOverflow = VerticalWrapMode.Overflow;
+
+        logLegacyText = logText;
+
+        // Close button
+        GameObject closeObj = new GameObject("CloseBtn", typeof(RectTransform), typeof(Image), typeof(Button));
+        closeObj.transform.SetParent(panel.transform, false);
+
+        RectTransform closeRect = closeObj.GetComponent<RectTransform>();
+        closeRect.anchorMin = new Vector2(1f, 1f);
+        closeRect.anchorMax = new Vector2(1f, 1f);
+        closeRect.pivot = new Vector2(1f, 1f);
+        closeRect.anchoredPosition = new Vector2(-8f, -8f);
+        closeRect.sizeDelta = new Vector2(36f, 36f);
+
+        Image closeImage = closeObj.GetComponent<Image>();
+        Sprite btnSprite = UISpriteLoader.ButtonNormal;
+        if (btnSprite != null)
+        {
+            closeImage.sprite = btnSprite;
+            closeImage.type = Image.Type.Sliced;
+            closeImage.color = Color.white;
+        }
+        else
+        {
+            closeImage.color = new Color(0.3f, 0.15f, 0.1f, 0.9f);
+        }
+
+        Button closeButton = closeObj.GetComponent<Button>();
+        closeButton.onClick.AddListener(Hide);
+
+        GameObject closeLabelObj = new GameObject("X", typeof(RectTransform), typeof(Text));
+        closeLabelObj.transform.SetParent(closeObj.transform, false);
+
+        RectTransform closeLabelRect = closeLabelObj.GetComponent<RectTransform>();
+        closeLabelRect.anchorMin = Vector2.zero;
+        closeLabelRect.anchorMax = Vector2.one;
+        closeLabelRect.offsetMin = Vector2.zero;
+        closeLabelRect.offsetMax = Vector2.zero;
+
+        Text closeLabel = closeLabelObj.GetComponent<Text>();
+        closeLabel.font = Font.CreateDynamicFontFromOSFont(new[] { "Arial" }, 20);
+        closeLabel.fontSize = 20;
+        closeLabel.color = new Color(0.9f, 0.7f, 0.6f, 1f);
+        closeLabel.alignment = TextAnchor.MiddleCenter;
+        closeLabel.raycastTarget = false;
+        closeLabel.text = "X";
     }
 }

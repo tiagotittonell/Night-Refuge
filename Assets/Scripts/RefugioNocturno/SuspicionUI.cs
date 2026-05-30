@@ -6,12 +6,14 @@ using TMPro;
 /// Muestra el nivel de sospecha actual al jugador.
 /// Se auto-vincula a un texto llamado "SuspicionText" en DynamicGameplayLayer.
 /// Si no existe, crea uno como fallback bajo DynamicGameplayLayer.
+/// Incluye icono visual del nivel de sospecha.
 /// </summary>
 public class SuspicionUI : MonoBehaviour
 {
     [Header("Referencias")]
     [SerializeField] private TMP_Text suspicionTmpText;
     [SerializeField] private Text suspicionLegacyText;
+    [SerializeField] private Image suspicionIcon;
     [SerializeField] private SuspicionSystem suspicionSystem;
 
     [Header("Colores")]
@@ -68,6 +70,21 @@ public class SuspicionUI : MonoBehaviour
             suspicionLegacyText.text = label;
             suspicionLegacyText.color = color;
         }
+
+        // Update icon
+        if (suspicionIcon != null)
+        {
+            Sprite iconSprite = UISpriteLoader.GetSuspicionIcon(level);
+            if (iconSprite != null)
+            {
+                suspicionIcon.sprite = iconSprite;
+                suspicionIcon.enabled = true;
+            }
+            else
+            {
+                suspicionIcon.enabled = false;
+            }
+        }
     }
 
     private string GetLevelLabel(SuspicionLevel level)
@@ -122,6 +139,15 @@ public class SuspicionUI : MonoBehaviour
             {
                 suspicionTmpText = existing.GetComponent<TMP_Text>();
                 suspicionLegacyText = existing.GetComponent<Text>();
+
+                // Look for icon sibling
+                Transform iconTransform = existing.transform.parent != null
+                    ? existing.transform.parent.Find("SuspicionIcon")
+                    : null;
+                if (iconTransform != null)
+                {
+                    suspicionIcon = iconTransform.GetComponent<Image>();
+                }
             }
             else
             {
@@ -135,15 +161,47 @@ public class SuspicionUI : MonoBehaviour
         GameObject dynamicLayer = GameObject.Find("DynamicGameplayLayer");
         Transform parent = dynamicLayer != null ? dynamicLayer.transform : transform;
 
-        GameObject textObject = new GameObject("SuspicionText", typeof(RectTransform), typeof(Text));
-        textObject.transform.SetParent(parent, false);
+        // Container for icon + text
+        GameObject container = new GameObject("SuspicionContainer", typeof(RectTransform), typeof(HorizontalLayoutGroup));
+        container.transform.SetParent(parent, false);
 
-        RectTransform rect = textObject.GetComponent<RectTransform>();
-        rect.anchorMin = new Vector2(0f, 1f);
-        rect.anchorMax = new Vector2(0.4f, 1f);
-        rect.pivot = new Vector2(0f, 1f);
-        rect.anchoredPosition = new Vector2(15f, -10f);
-        rect.sizeDelta = new Vector2(0f, 35f);
+        RectTransform containerRect = container.GetComponent<RectTransform>();
+        containerRect.anchorMin = new Vector2(0f, 1f);
+        containerRect.anchorMax = new Vector2(0.4f, 1f);
+        containerRect.pivot = new Vector2(0f, 1f);
+        containerRect.anchoredPosition = new Vector2(15f, -10f);
+        containerRect.sizeDelta = new Vector2(0f, 40f);
+
+        HorizontalLayoutGroup hlg = container.GetComponent<HorizontalLayoutGroup>();
+        hlg.spacing = 6f;
+        hlg.childAlignment = TextAnchor.MiddleLeft;
+        hlg.childControlWidth = false;
+        hlg.childControlHeight = false;
+        hlg.childForceExpandWidth = false;
+        hlg.childForceExpandHeight = false;
+
+        // Icon
+        GameObject iconObj = new GameObject("SuspicionIcon", typeof(RectTransform), typeof(Image), typeof(LayoutElement));
+        iconObj.transform.SetParent(container.transform, false);
+
+        Image iconImage = iconObj.GetComponent<Image>();
+        iconImage.preserveAspect = true;
+        iconImage.raycastTarget = false;
+        iconImage.enabled = false;
+
+        LayoutElement iconLayout = iconObj.GetComponent<LayoutElement>();
+        iconLayout.preferredWidth = 32f;
+        iconLayout.preferredHeight = 32f;
+
+        suspicionIcon = iconImage;
+
+        // Text
+        GameObject textObject = new GameObject("SuspicionText", typeof(RectTransform), typeof(Text), typeof(LayoutElement));
+        textObject.transform.SetParent(container.transform, false);
+
+        LayoutElement textLayout = textObject.GetComponent<LayoutElement>();
+        textLayout.preferredWidth = 250f;
+        textLayout.preferredHeight = 35f;
 
         Text legacyText = textObject.GetComponent<Text>();
         legacyText.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 18);

@@ -1,0 +1,793 @@
+fileFormatVersion: 2
+guid: 947757e74a5088646939650b47b18e66
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8556438306572111745
+    second: Boton generico hover state_0
+  - first:
+      213: 8291894485236647739
+    second: Boton generico hover state_1
+  - first:
+      213: 8201317176261246614
+    second: Boton generico hover state_2
+  - first:
+      213: 7334987875356267667
+    second: Boton generico hover state_3
+  - first:
+      213: -175734123551855642
+    second: Boton generico hover state_4
+  - first:
+      213: -6225545328064893745
+    second: Boton generico hover state_5
+  - first:
+      213: -5330212784176475738
+    second: Boton generico hover state_6
+  - first:
+      213: -4799473188618071141
+    second: Boton generico hover state_7
+  - first:
+      213: 6143749279109039756
+    second: Boton generico hover state_8
+  - first:
+      213: -5815239237966097905
+    second: Boton generico hover state_9
+  - first:
+      213: -5772185269644989220
+    second: Boton generico hover state_10
+  - first:
+      213: -3334666174339806402
+    second: Boton generico hover state_11
+  - first:
+      213: 2721887711875070169
+    second: Boton generico hover state_12
+  - first:
+      213: -2116832511727816233
+    second: Boton generico hover state_13
+  - first:
+      213: -3106300954708256669
+    second: Boton generico hover state_14
+  - first:
+      213: 737401081177937400
+    second: Boton generico hover state_15
+  - first:
+      213: 4331329688682355871
+    second: Boton generico hover state_16
+  - first:
+      213: -1816017438258639592
+    second: Boton generico hover state_17
+  - first:
+      213: -2480384093409656567
+    second: Boton generico hover state_18
+  - first:
+      213: -2753550299843702430
+    second: Boton generico hover state_19
+  - first:
+      213: 8537826864653074551
+    second: Boton generico hover state_20
+  - first:
+      213: 7497007744299634614
+    second: Boton generico hover state_21
+  - first:
+      213: 8215926173476614563
+    second: Boton generico hover state_22
+  - first:
+      213: 1803719194202248304
+    second: Boton generico hover state_23
+  - first:
+      213: 5436274751491184360
+    second: Boton generico hover state_24
+  - first:
+      213: -6096506358377646315
+    second: Boton generico hover state_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Boton generico hover state_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1526
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f707932b1bc614980800000000000000
+      internalID: -8556438306572111745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_1
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 634
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b370d8b1a1ab21370800000000000000
+      internalID: 8291894485236647739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_2
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 615
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69e7c55f48ee0d170800000000000000
+      internalID: 8201317176261246614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 610
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39458663c9c1bc560800000000000000
+      internalID: 7334987875356267667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_4
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 602
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ebe6c6eebaaf8df0800000000000000
+      internalID: -175734123551855642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_5
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 594
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcc699b228b6a99a0800000000000000
+      internalID: -6225545328064893745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_6
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 586
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a15ae5a6b74706b0800000000000000
+      internalID: -5330212784176475738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_7
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 570
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b93986b4098d46db0800000000000000
+      internalID: -4799473188618071141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_8
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 547
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c864b5a1b6bf24550800000000000000
+      internalID: 6143749279109039756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_9
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 538
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f021e1939be1c4fa0800000000000000
+      internalID: -5815239237966097905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_10
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 523
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdc6111641415efa0800000000000000
+      internalID: -5772185269644989220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_11
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 503
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3b07f148c2e8b1d0800000000000000
+      internalID: -3334666174339806402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_12
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 483
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d870d8e37616c520800000000000000
+      internalID: 2721887711875070169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_13
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 475
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d13779cb008f92e0800000000000000
+      internalID: -2116832511727816233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_14
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 450
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36858255db334e4d0800000000000000
+      internalID: -3106300954708256669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_15
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 443
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f5999c5066cb3a00800000000000000
+      internalID: 737401081177937400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_16
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 431
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9cd30b4769fb1c30800000000000000
+      internalID: 4331329688682355871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_17
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 426
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81dcda6f2c53cc6e0800000000000000
+      internalID: -1816017438258639592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_18
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 411
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 901c9c50fc7e39dd0800000000000000
+      internalID: -2480384093409656567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_19
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 395
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26155aa579c69c9d0800000000000000
+      internalID: -2753550299843702430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_20
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 387
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7700f6d4c447c7670800000000000000
+      internalID: 8537826864653074551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_21
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 379
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bf055592d8ba0860800000000000000
+      internalID: 7497007744299634614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_22
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 362
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a178ee2355d40270800000000000000
+      internalID: 8215926173476614563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_23
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 355
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0749af4fc09180910800000000000000
+      internalID: 1803719194202248304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_24
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 39
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e69e087517817b40800000000000000
+      internalID: 5436274751491184360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boton generico hover state_25
+      rect:
+        serializedVersion: 2
+        x: 994
+        y: 24
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5177df984cbd46ba0800000000000000
+      internalID: -6096506358377646315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Boton generico hover state_0: -8556438306572111745
+      Boton generico hover state_1: 8291894485236647739
+      Boton generico hover state_10: -5772185269644989220
+      Boton generico hover state_11: -3334666174339806402
+      Boton generico hover state_12: 2721887711875070169
+      Boton generico hover state_13: -2116832511727816233
+      Boton generico hover state_14: -3106300954708256669
+      Boton generico hover state_15: 737401081177937400
+      Boton generico hover state_16: 4331329688682355871
+      Boton generico hover state_17: -1816017438258639592
+      Boton generico hover state_18: -2480384093409656567
+      Boton generico hover state_19: -2753550299843702430
+      Boton generico hover state_2: 8201317176261246614
+      Boton generico hover state_20: 8537826864653074551
+      Boton generico hover state_21: 7497007744299634614
+      Boton generico hover state_22: 8215926173476614563
+      Boton generico hover state_23: 1803719194202248304
+      Boton generico hover state_24: 5436274751491184360
+      Boton generico hover state_25: -6096506358377646315
+      Boton generico hover state_3: 7334987875356267667
+      Boton generico hover state_4: -175734123551855642
+      Boton generico hover state_5: -6225545328064893745
+      Boton generico hover state_6: -5330212784176475738
+      Boton generico hover state_7: -4799473188618071141
+      Boton generico hover state_8: 6143749279109039756
+      Boton generico hover state_9: -5815239237966097905
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

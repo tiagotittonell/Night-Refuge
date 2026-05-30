@@ -131,33 +131,79 @@ public class UpgradeShopUI : MonoBehaviour
         rect.anchorMin = new Vector2(0f, 1f);
         rect.anchorMax = new Vector2(1f, 1f);
         rect.pivot = new Vector2(0.5f, 1f);
-        rect.sizeDelta = new Vector2(0f, 40f);
+        rect.sizeDelta = new Vector2(0f, 50f);
 
         LayoutElement layout = buttonObject.AddComponent<LayoutElement>();
-        layout.minHeight = 40f;
-        layout.preferredHeight = 40f;
+        layout.minHeight = 50f;
+        layout.preferredHeight = 50f;
 
         Image image = buttonObject.GetComponent<Image>();
-        image.color = canAfford
-            ? new Color(0.15f, 0.2f, 0.12f, 0.85f)
-            : new Color(0.12f, 0.1f, 0.08f, 0.6f);
+        Sprite btnSprite = canAfford ? UISpriteLoader.ButtonNormal : UISpriteLoader.ButtonDisabled;
+        if (btnSprite != null)
+        {
+            image.sprite = btnSprite;
+            image.type = Image.Type.Sliced;
+            image.color = Color.white;
+        }
+        else
+        {
+            image.color = canAfford
+                ? new Color(0.15f, 0.2f, 0.12f, 0.85f)
+                : new Color(0.12f, 0.1f, 0.08f, 0.6f);
+        }
 
         Button button = buttonObject.GetComponent<Button>();
         button.interactable = canAfford;
 
-        // Label
+        // Apply sprite transitions for hover/disabled
+        Sprite hoverSprite = UISpriteLoader.ButtonHover;
+        Sprite disabledSprite = UISpriteLoader.ButtonDisabled;
+        if (btnSprite != null && hoverSprite != null)
+        {
+            button.transition = Selectable.Transition.SpriteSwap;
+            SpriteState spriteState = new SpriteState
+            {
+                highlightedSprite = hoverSprite,
+                pressedSprite = hoverSprite,
+                disabledSprite = disabledSprite
+            };
+            button.spriteState = spriteState;
+        }
+
+        // Upgrade icon
+        Sprite upgradeIcon = UISpriteLoader.GetUpgradeIcon(upgrade.effect);
+        if (upgradeIcon != null)
+        {
+            GameObject iconObj = new GameObject("Icon", typeof(RectTransform), typeof(Image));
+            iconObj.transform.SetParent(buttonObject.transform, false);
+
+            RectTransform iconRect = iconObj.GetComponent<RectTransform>();
+            iconRect.anchorMin = new Vector2(0f, 0.5f);
+            iconRect.anchorMax = new Vector2(0f, 0.5f);
+            iconRect.pivot = new Vector2(0f, 0.5f);
+            iconRect.anchoredPosition = new Vector2(6f, 0f);
+            iconRect.sizeDelta = new Vector2(36f, 36f);
+
+            Image iconImage = iconObj.GetComponent<Image>();
+            iconImage.sprite = upgradeIcon;
+            iconImage.preserveAspect = true;
+            iconImage.raycastTarget = false;
+        }
+
+        // Label (offset to the right if icon present)
+        float labelLeft = upgradeIcon != null ? 48f : 12f;
         GameObject textObject = new GameObject("Label", typeof(RectTransform), typeof(Text));
         textObject.transform.SetParent(buttonObject.transform, false);
 
         RectTransform textRect = textObject.GetComponent<RectTransform>();
         textRect.anchorMin = Vector2.zero;
         textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = new Vector2(12f, 2f);
+        textRect.offsetMin = new Vector2(labelLeft, 2f);
         textRect.offsetMax = new Vector2(-12f, -2f);
 
         Text label = textObject.GetComponent<Text>();
-        label.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 16);
-        label.fontSize = 16;
+        label.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 15);
+        label.fontSize = 15;
         label.color = canAfford
             ? new Color(0.78f, 0.70f, 0.58f, 1f)
             : new Color(0.5f, 0.45f, 0.4f, 0.7f);
@@ -262,12 +308,22 @@ public class UpgradeShopUI : MonoBehaviour
         panelRect.sizeDelta = Vector2.zero;
 
         Image panelImage = panel.GetComponent<Image>();
-        panelImage.color = new Color(0.04f, 0.035f, 0.03f, 0.97f);
+        Sprite shopBg = UISpriteLoader.ShopBackground;
+        if (shopBg != null)
+        {
+            panelImage.sprite = shopBg;
+            panelImage.type = Image.Type.Sliced;
+            panelImage.color = Color.white;
+        }
+        else
+        {
+            panelImage.color = new Color(0.04f, 0.035f, 0.03f, 0.97f);
+        }
 
         panelRoot = panel;
 
-        // Supplies text
-        GameObject suppliesObj = new GameObject("SuppliesText", typeof(RectTransform), typeof(Text));
+        // Supplies text with coin icon
+        GameObject suppliesObj = new GameObject("SuppliesText", typeof(RectTransform), typeof(HorizontalLayoutGroup));
         suppliesObj.transform.SetParent(panel.transform, false);
 
         RectTransform suppliesRect = suppliesObj.GetComponent<RectTransform>();
@@ -276,7 +332,40 @@ public class UpgradeShopUI : MonoBehaviour
         suppliesRect.offsetMin = new Vector2(30f, 0f);
         suppliesRect.offsetMax = new Vector2(-30f, -10f);
 
-        Text suppliesLabel = suppliesObj.GetComponent<Text>();
+        HorizontalLayoutGroup hlg = suppliesObj.GetComponent<HorizontalLayoutGroup>();
+        hlg.spacing = 8f;
+        hlg.childAlignment = TextAnchor.MiddleLeft;
+        hlg.childControlWidth = false;
+        hlg.childControlHeight = false;
+        hlg.childForceExpandWidth = false;
+        hlg.childForceExpandHeight = false;
+
+        // Coin icon
+        Sprite coinSprite = UISpriteLoader.SuppliesCoin;
+        if (coinSprite != null)
+        {
+            GameObject coinObj = new GameObject("CoinIcon", typeof(RectTransform), typeof(Image), typeof(LayoutElement));
+            coinObj.transform.SetParent(suppliesObj.transform, false);
+
+            Image coinImage = coinObj.GetComponent<Image>();
+            coinImage.sprite = coinSprite;
+            coinImage.preserveAspect = true;
+            coinImage.raycastTarget = false;
+
+            LayoutElement coinLayout = coinObj.GetComponent<LayoutElement>();
+            coinLayout.preferredWidth = 28f;
+            coinLayout.preferredHeight = 28f;
+        }
+
+        // Supplies label
+        GameObject suppliesTextObj = new GameObject("Label", typeof(RectTransform), typeof(Text), typeof(LayoutElement));
+        suppliesTextObj.transform.SetParent(suppliesObj.transform, false);
+
+        LayoutElement suppliesTextLayout = suppliesTextObj.GetComponent<LayoutElement>();
+        suppliesTextLayout.preferredWidth = 350f;
+        suppliesTextLayout.preferredHeight = 30f;
+
+        Text suppliesLabel = suppliesTextObj.GetComponent<Text>();
         suppliesLabel.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 22);
         suppliesLabel.fontSize = 22;
         suppliesLabel.color = new Color(0.85f, 0.75f, 0.4f, 1f);
@@ -336,9 +425,32 @@ public class UpgradeShopUI : MonoBehaviour
         btnRect.sizeDelta = new Vector2(250f, 50f);
 
         Image btnImage = btnObj.GetComponent<Image>();
-        btnImage.color = new Color(0.18f, 0.15f, 0.10f, 0.95f);
+        Sprite continueBtnSprite = UISpriteLoader.ButtonNormal;
+        if (continueBtnSprite != null)
+        {
+            btnImage.sprite = continueBtnSprite;
+            btnImage.type = Image.Type.Sliced;
+            btnImage.color = Color.white;
+        }
+        else
+        {
+            btnImage.color = new Color(0.18f, 0.15f, 0.10f, 0.95f);
+        }
 
         continueButton = btnObj.GetComponent<Button>();
+
+        // Apply sprite transitions for continue button
+        Sprite continueHover = UISpriteLoader.ButtonHover;
+        if (continueBtnSprite != null && continueHover != null)
+        {
+            continueButton.transition = Selectable.Transition.SpriteSwap;
+            SpriteState continueSpriteState = new SpriteState
+            {
+                highlightedSprite = continueHover,
+                pressedSprite = continueHover
+            };
+            continueButton.spriteState = continueSpriteState;
+        }
 
         GameObject btnLabel = new GameObject("Label", typeof(RectTransform), typeof(Text));
         btnLabel.transform.SetParent(btnObj.transform, false);
