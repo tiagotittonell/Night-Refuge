@@ -156,11 +156,11 @@ public class InterEventUI : MonoBehaviour
 
         if (eventTmpText == null && eventLegacyText == null)
         {
-            GameObject existing = GameObject.Find("InterEventText");
+            GameObject existing = UISpriteLoader.FindIncludingInactive("InterEventText");
             if (existing != null)
             {
                 eventTmpText = existing.GetComponent<TMP_Text>();
-                eventLegacyText = existing.GetComponent<Text>();
+                eventLegacyText = existing.GetComponentInChildren<Text>(true);
                 panelRoot = existing;
             }
             else

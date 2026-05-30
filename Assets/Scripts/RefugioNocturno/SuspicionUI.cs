@@ -134,7 +134,7 @@ public class SuspicionUI : MonoBehaviour
 
         if (suspicionTmpText == null && suspicionLegacyText == null)
         {
-            GameObject existing = GameObject.Find("SuspicionText");
+            GameObject existing = UISpriteLoader.FindIncludingInactive("SuspicionText");
             if (existing != null)
             {
                 suspicionTmpText = existing.GetComponent<TMP_Text>();

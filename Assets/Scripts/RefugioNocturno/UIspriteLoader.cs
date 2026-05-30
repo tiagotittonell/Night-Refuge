@@ -103,4 +103,38 @@ public static class UISpriteLoader
     {
         cache.Clear();
     }
+
+    /// <summary>
+    /// Busca un GameObject por nombre incluyendo objetos inactivos.
+    /// Recorre todos los root objects de la escena y sus hijos.
+    /// Usar en lugar de GameObject.Find() cuando el objeto puede estar desactivado.
+    /// </summary>
+    public static GameObject FindIncludingInactive(string name)
+    {
+        // First try active (fast path)
+        GameObject active = GameObject.Find(name);
+        if (active != null) return active;
+
+        // Search inactive objects through all root game objects
+        foreach (GameObject root in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            Transform found = SearchChildrenRecursive(root.transform, name);
+            if (found != null) return found.gameObject;
+        }
+
+        return null;
+    }
+
+    private static Transform SearchChildrenRecursive(Transform parent, string name)
+    {
+        if (parent.name == name) return parent;
+
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform result = SearchChildrenRecursive(parent.GetChild(i), name);
+            if (result != null) return result;
+        }
+
+        return null;
+    }
 }

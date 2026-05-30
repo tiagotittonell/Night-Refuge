@@ -155,7 +155,7 @@ public class VisitorLogUI : MonoBehaviour
 
         if (panelRoot == null)
         {
-            GameObject existing = GameObject.Find("VisitorLogPanel");
+            GameObject existing = UISpriteLoader.FindIncludingInactive("VisitorLogPanel");
             if (existing != null)
             {
                 panelRoot = existing;

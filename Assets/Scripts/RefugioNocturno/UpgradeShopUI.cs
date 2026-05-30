@@ -265,7 +265,7 @@ public class UpgradeShopUI : MonoBehaviour
 
         if (panelRoot == null)
         {
-            GameObject existing = GameObject.Find("UpgradeShopPanel");
+            GameObject existing = UISpriteLoader.FindIncludingInactive("UpgradeShopPanel");
             if (existing != null)
             {
                 panelRoot = existing;
@@ -274,7 +274,7 @@ public class UpgradeShopUI : MonoBehaviour
 
         if (continueButton == null)
         {
-            GameObject btn = GameObject.Find("UpgradeShopContinueButton");
+            GameObject btn = UISpriteLoader.FindIncludingInactive("UpgradeShopContinueButton");
             if (btn != null)
             {
                 continueButton = btn.GetComponent<Button>();
@@ -283,7 +283,7 @@ public class UpgradeShopUI : MonoBehaviour
 
         if (buttonsContainer == null)
         {
-            GameObject container = GameObject.Find("UpgradeButtonsContainer");
+            GameObject container = UISpriteLoader.FindIncludingInactive("UpgradeButtonsContainer");
             if (container != null)
             {
                 buttonsContainer = container.transform;
