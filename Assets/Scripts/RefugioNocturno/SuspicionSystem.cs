@@ -78,15 +78,15 @@ public class SuspicionSystem : MonoBehaviour
     private void Recalculate()
     {
         // Use filtered profile for scoring — same data the player sees
-        UpgradeManager upgrades = Object.FindFirstObjectByType<UpgradeManager>();
+        UpgradeManager upgrades = UnityEngine.Object.FindFirstObjectByType<UpgradeManager>();
         bool hasLamp = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ReinforcedLamp);
         bool hasMic = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ImprovedMicrophone);
         bool hasThermal = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ThermalDetector);
 
-        InterEventSystem eventSystem = Object.FindFirstObjectByType<InterEventSystem>();
+        InterEventSystem eventSystem = UnityEngine.Object.FindFirstObjectByType<InterEventSystem>();
         bool blackout = eventSystem != null && eventSystem.IsBlackoutActive;
 
-        NightManager nightManager = Object.FindFirstObjectByType<NightManager>();
+        NightManager nightManager = UnityEngine.Object.FindFirstObjectByType<NightManager>();
         int nightNum = nightManager != null ? nightManager.CurrentNightNumber : 1;
 
         ObservationProfile filtered = ObservationFilter.Filter(
