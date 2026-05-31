@@ -99,6 +99,18 @@ public class InterEventUI : MonoBehaviour
         panel.SetActive(true);
         activePanel = panel;
 
+        // Apply the correct background sprite from Resources
+        Sprite eventBg = UISpriteLoader.GetEventBackground(interEvent.eventType);
+        if (eventBg != null)
+        {
+            Image panelImage = panel.GetComponent<Image>();
+            if (panelImage != null)
+            {
+                panelImage.sprite = eventBg;
+                panelImage.color = Color.white;
+            }
+        }
+
         // Update text inside the panel
         bool isDangerous = interEvent.securityChange < 0 || interEvent.moraleChange < -1;
         Color color = isDangerous ? dangerEventColor : eventColor;
