@@ -197,7 +197,52 @@ public class UIScaffoldGenerator : EditorWindow
 
         panel.SetActive(false);
 
-        Debug.Log("[UIScaffold] VisitorLogPanel creado (inactivo). Actívalo para ajustar layout.");
+        // Toggle button (always visible during gameplay)
+        if (GameObject.Find("VisitorLogToggleButton") == null)
+        {
+            GameObject btnObj = new GameObject("VisitorLogToggleButton", typeof(RectTransform), typeof(Image), typeof(Button));
+            btnObj.transform.SetParent(parent, false);
+            Undo.RegisterCreatedObjectUndo(btnObj, "Create VisitorLogToggleButton");
+
+            RectTransform btnRect = btnObj.GetComponent<RectTransform>();
+            btnRect.anchorMin = new Vector2(1f, 1f);
+            btnRect.anchorMax = new Vector2(1f, 1f);
+            btnRect.pivot = new Vector2(1f, 1f);
+            btnRect.anchoredPosition = new Vector2(-15f, -60f);
+            btnRect.sizeDelta = new Vector2(160f, 40f);
+
+            Image btnImage = btnObj.GetComponent<Image>();
+            Sprite btnSprite = Resources.Load<Sprite>("UI/Buttons/button_normal");
+            if (btnSprite != null)
+            {
+                btnImage.sprite = btnSprite;
+                btnImage.type = Image.Type.Sliced;
+                btnImage.color = Color.white;
+            }
+            else
+            {
+                btnImage.color = new Color(0.12f, 0.10f, 0.08f, 0.9f);
+            }
+
+            GameObject labelObj = new GameObject("Label", typeof(RectTransform), typeof(Text));
+            labelObj.transform.SetParent(btnObj.transform, false);
+
+            RectTransform labelRect = labelObj.GetComponent<RectTransform>();
+            labelRect.anchorMin = Vector2.zero;
+            labelRect.anchorMax = Vector2.one;
+            labelRect.offsetMin = Vector2.zero;
+            labelRect.offsetMax = Vector2.zero;
+
+            Text label = labelObj.GetComponent<Text>();
+            label.font = Font.CreateDynamicFontFromOSFont(new[] { "Arial" }, 16);
+            label.fontSize = 16;
+            label.color = new Color(0.78f, 0.70f, 0.58f, 1f);
+            label.alignment = TextAnchor.MiddleCenter;
+            label.raycastTarget = false;
+            label.text = "\u270d REGISTRO";
+        }
+
+        Debug.Log("[UIScaffold] VisitorLogPanel + ToggleButton creados. Panel inactivo, botón activo.");
     }
 
     private static void GenerateInterEventPanel()

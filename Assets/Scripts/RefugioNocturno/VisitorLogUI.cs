@@ -21,13 +21,19 @@ public class VisitorLogUI : MonoBehaviour
     private void Awake()
     {
         EnsureBindings();
+        Hide();
+    }
+
+    private void Start()
+    {
+        // Re-bind in Start to catch objects created during other Awake() calls
+        EnsureBindings();
 
         if (toggleButton != null)
         {
+            toggleButton.onClick.RemoveListener(Toggle);
             toggleButton.onClick.AddListener(Toggle);
         }
-
-        Hide();
     }
 
     public void Toggle()
