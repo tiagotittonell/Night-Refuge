@@ -289,18 +289,67 @@ public class UIScaffoldGenerator : EditorWindow
 
     private static void GenerateInterEventPanel()
     {
-        if (GameObject.Find("InterEventText") != null)
-        {
-            Debug.LogWarning("[UIScaffold] InterEventText ya existe.");
-            return;
-        }
-
         Transform parent = GetOrCreateParent("DynamicGameplayLayer");
         if (parent == null) return;
 
-        GameObject panel = new GameObject("InterEventText", typeof(RectTransform), typeof(Image));
+        // All event panels: name → sprite path → preview text
+        var eventPanels = new (string name, string sprite, string preview)[]
+        {
+            ("InterEvent_NoiseInDucts",    "UI/Events/event_noise_ducts",  "Ruidos extraños en los ductos de ventilación..."),
+            ("InterEvent_ShelterProtest",  "UI/Events/event_protest",      "Tensión interna. Algunos residentes protestan en los pasillos."),
+            ("InterEvent_Blackout",        "UI/Events/event_blackout",     "Corte de luz. El refugio queda en penumbras."),
+            ("InterEvent_Radio",           "UI/Events/event_blackout_alt", "La radio capta una señal intermitente..."),
+            ("InterEvent_DoorKnock",       "UI/Events/event_blackout_alt", "Alguien golpea una puerta interior."),
+            ("InterEvent_PersonInfo",      "UI/Events/event_blackout_alt", "El residente aceptado da información sobre el exterior."),
+            ("InterEvent_FalseRumor",      "UI/Events/event_protest",      "Corre un rumor entre los residentes..."),
+            ("InterEvent_DistantScream",   "UI/Events/event_blackout",     "Un grito lejano rompe el silencio del refugio."),
+            ("InterEvent_SilenceBreak",    "UI/Events/event_noise_ducts",  "El silencio se quiebra de repente."),
+            ("InterEvent_Generic",         "UI/Events/event_blackout_alt", "[Evento]"),
+        };
+
+        int created = 0;
+        foreach (var (name, spritePath, preview) in eventPanels)
+        {
+            if (FindObjectInScene(name) != null)
+            {
+                Debug.LogWarning($"[UIScaffold] {name} ya existe, omitido.");
+                continue;
+            }
+
+            GameObject panel = CreateEventPanel(parent, name, spritePath, preview);
+            Undo.RegisterCreatedObjectUndo(panel, $"Create {name}");
+            created++;
+        }
+
+        Debug.Log($"[UIScaffold] {created} paneles de eventos creados (inactivos). Ajusta tamaños y posiciones.");
+    }
+
+    private static GameObject FindObjectInScene(string name)
+    {
+        // Search including inactive
+        foreach (GameObject root in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+        {
+            Transform found = FindChildRecursive(root.transform, name);
+            if (found != null) return found.gameObject;
+        }
+        return null;
+    }
+
+    private static Transform FindChildRecursive(Transform parent, string name)
+    {
+        if (parent.name == name) return parent;
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform result = FindChildRecursive(parent.GetChild(i), name);
+            if (result != null) return result;
+        }
+        return null;
+    }
+
+    private static GameObject CreateEventPanel(Transform parent, string name, string spritePath, string previewText)
+    {
+        GameObject panel = new GameObject(name, typeof(RectTransform), typeof(Image));
         panel.transform.SetParent(parent, false);
-        Undo.RegisterCreatedObjectUndo(panel, "Create InterEventText");
 
         RectTransform panelRect = panel.GetComponent<RectTransform>();
         panelRect.anchorMin = new Vector2(0.15f, 0.35f);
@@ -310,10 +359,10 @@ public class UIScaffoldGenerator : EditorWindow
         panelRect.sizeDelta = Vector2.zero;
 
         Image panelImage = panel.GetComponent<Image>();
-        Sprite eventBg = Resources.Load<Sprite>("UI/Events/event_blackout");
-        if (eventBg != null)
+        Sprite bg = Resources.Load<Sprite>(spritePath);
+        if (bg != null)
         {
-            panelImage.sprite = eventBg;
+            panelImage.sprite = bg;
             panelImage.color = new Color(1f, 1f, 1f, 0.92f);
         }
         else
@@ -322,8 +371,8 @@ public class UIScaffoldGenerator : EditorWindow
         }
         panelImage.raycastTarget = false;
 
-        // Event text
-        GameObject textObj = new GameObject("Text", typeof(RectTransform), typeof(Text));
+        // Text child
+        GameObject textObj = new GameObject("EventText", typeof(RectTransform), typeof(Text));
         textObj.transform.SetParent(panel.transform, false);
 
         RectTransform textRect = textObj.GetComponent<RectTransform>();
@@ -339,11 +388,10 @@ public class UIScaffoldGenerator : EditorWindow
         text.color = new Color(0.6f, 0.55f, 0.45f, 1f);
         text.alignment = TextAnchor.MiddleCenter;
         text.raycastTarget = false;
-        text.text = "[Evento de ejemplo: Se escuchan ruidos en los ductos...]";
+        text.text = previewText;
 
         panel.SetActive(false);
-
-        Debug.Log("[UIScaffold] InterEventText creado (inactivo). Actívalo para ver tamaño.");
+        return panel;
     }
 
     private static void GenerateUpgradeShopPanel()
