@@ -14,6 +14,7 @@ public class VisitorLogUI : MonoBehaviour
     [SerializeField] private TMP_Text logTmpText;
     [SerializeField] private Text logLegacyText;
     [SerializeField] private Button toggleButton;
+    [SerializeField] private Button closeButton;
     [SerializeField] private VisitorLog visitorLog;
 
     private bool isVisible;
@@ -33,6 +34,12 @@ public class VisitorLogUI : MonoBehaviour
         {
             toggleButton.onClick.RemoveListener(Toggle);
             toggleButton.onClick.AddListener(Toggle);
+        }
+
+        if (closeButton != null)
+        {
+            closeButton.onClick.RemoveListener(Hide);
+            closeButton.onClick.AddListener(Hide);
         }
     }
 
@@ -189,12 +196,23 @@ public class VisitorLogUI : MonoBehaviour
             {
                 CreateToggleButton();
             }
+        }
 
-            if (toggleButton != null)
+        if (closeButton == null && panelRoot != null)
+        {
+            GameObject closeObj = UISpriteLoader.FindIncludingInactive("VisitorLogCloseButton");
+            if (closeObj == null)
             {
-                toggleButton.onClick.RemoveListener(Toggle);
-                toggleButton.onClick.AddListener(Toggle);
+                // Also search as child of panel
+                Transform child = panelRoot.transform.Find("VisitorLogCloseButton");
+                if (child != null) closeObj = child.gameObject;
             }
+            if (closeButton == null)
+            {
+                Transform fallbackClose = panelRoot.transform.Find("CloseBtn");
+                if (fallbackClose != null) closeButton = fallbackClose.GetComponent<Button>();
+            }
+            if (closeObj != null) closeButton = closeObj.GetComponent<Button>();
         }
     }
 

@@ -195,6 +195,48 @@ public class UIScaffoldGenerator : EditorWindow
         logText.raycastTarget = false;
         logText.text = "REGISTRO DE VISITANTES\n═══════════════════\n\n▪ Visitante ejemplo [22:30]\n  Decisión: PERMITIDO\n  Sospecha: Baja";
 
+        // Close button (named for runtime binding)
+        GameObject closeObj = new GameObject("VisitorLogCloseButton", typeof(RectTransform), typeof(Image), typeof(Button));
+        closeObj.transform.SetParent(panel.transform, false);
+        Undo.RegisterCreatedObjectUndo(closeObj, "Create VisitorLogCloseButton");
+
+        RectTransform closeRect = closeObj.GetComponent<RectTransform>();
+        closeRect.anchorMin = new Vector2(1f, 1f);
+        closeRect.anchorMax = new Vector2(1f, 1f);
+        closeRect.pivot = new Vector2(1f, 1f);
+        closeRect.anchoredPosition = new Vector2(-10f, -10f);
+        closeRect.sizeDelta = new Vector2(44f, 44f);
+
+        Image closeImage = closeObj.GetComponent<Image>();
+        Sprite closeSprite = Resources.Load<Sprite>("UI/Buttons/button_normal");
+        if (closeSprite != null)
+        {
+            closeImage.sprite = closeSprite;
+            closeImage.type = Image.Type.Sliced;
+            closeImage.color = Color.white;
+        }
+        else
+        {
+            closeImage.color = new Color(0.3f, 0.1f, 0.08f, 0.9f);
+        }
+
+        GameObject closeLabelObj = new GameObject("Label", typeof(RectTransform), typeof(Text));
+        closeLabelObj.transform.SetParent(closeObj.transform, false);
+
+        RectTransform closeLabelRect = closeLabelObj.GetComponent<RectTransform>();
+        closeLabelRect.anchorMin = Vector2.zero;
+        closeLabelRect.anchorMax = Vector2.one;
+        closeLabelRect.offsetMin = Vector2.zero;
+        closeLabelRect.offsetMax = Vector2.zero;
+
+        Text closeLabel = closeLabelObj.GetComponent<Text>();
+        closeLabel.font = Font.CreateDynamicFontFromOSFont(new[] { "Arial" }, 20);
+        closeLabel.fontSize = 20;
+        closeLabel.color = new Color(0.9f, 0.7f, 0.6f, 1f);
+        closeLabel.alignment = TextAnchor.MiddleCenter;
+        closeLabel.raycastTarget = false;
+        closeLabel.text = "X";
+
         panel.SetActive(false);
 
         // Toggle button (always visible during gameplay)
