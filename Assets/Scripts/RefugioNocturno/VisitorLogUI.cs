@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -93,6 +94,9 @@ public class VisitorLogUI : MonoBehaviour
             return;
         }
 
+        UpgradeManager upgrades = Object.FindFirstObjectByType<UpgradeManager>();
+        bool hasArchive = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.InternalArchive);
+
         StringBuilder builder = new StringBuilder();
         builder.AppendLine("REGISTRO DE VISITANTES");
         builder.AppendLine("═══════════════════════════════");
@@ -121,9 +125,45 @@ public class VisitorLogUI : MonoBehaviour
                 builder.AppendLine(string.Join(", ", record.observedClues));
             }
 
-            if (record.questionsAsked.Count > 0)
+            if (hasArchive)
             {
-                builder.AppendLine($"  Preguntas: {record.questionsAsked.Count}");
+                // Enhanced info with InternalArchive
+                if (record.questionsAsked.Count > 0)
+                {
+                    builder.AppendLine($"  Preguntas realizadas: {record.questionsAsked.Count}");
+                    for (int i = 0; i < record.questionsAsked.Count; i++)
+                    {
+                        string tagLabel = i < record.responseTags.Count
+                            ? $" [{record.responseTags[i]}]"
+                            : "";
+                        builder.AppendLine($"    - {record.questionsAsked[i]}{tagLabel}");
+                    }
+                }
+
+                // Resource changes
+                if (record.foodDelta != 0 || record.securityDelta != 0 ||
+                    record.moraleDelta != 0 || record.populationDelta != 0)
+                {
+                    builder.Append("  Recursos: ");
+                    List<string> changes = new List<string>();
+                    if (record.foodDelta != 0) changes.Add($"Comida {record.foodDelta:+#;-#}");
+                    if (record.securityDelta != 0) changes.Add($"Seguridad {record.securityDelta:+#;-#}");
+                    if (record.moraleDelta != 0) changes.Add($"Moral {record.moraleDelta:+#;-#}");
+                    if (record.populationDelta != 0) changes.Add($"Poblacion {record.populationDelta:+#;-#}");
+                    builder.AppendLine(string.Join(", ", changes));
+                }
+
+                if (!string.IsNullOrEmpty(record.activeRuleDescription))
+                {
+                    builder.AppendLine($"  Regla activa: {record.activeRuleDescription}");
+                }
+            }
+            else
+            {
+                if (record.questionsAsked.Count > 0)
+                {
+                    builder.AppendLine($"  Preguntas: {record.questionsAsked.Count}");
+                }
             }
         }
 

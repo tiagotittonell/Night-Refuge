@@ -212,6 +212,142 @@ public static class ExampleVisitorFactory
                         requiresPreviousAccepted = true
                     }
                 }
+            },
+            // === NOCHE 3 ===
+            new NightData
+            {
+                nightLabel = "NOCHE 3",
+                clockTime = "04:33 AM",
+                rule = "Los imitadores aprendieron a usar nombres propios, pero fallan al recordar lugares concretos.",
+                suspicionRule = new NightRuleData
+                {
+                    description = "Los imitadores usan nombres propios, pero fallan al recordar lugares.",
+                    ruleType = NightRuleType.ImitatorsUseNamesButFailPlaces,
+                    suspicionOnViolation = 3,
+                    reliefOnCompliance = 1
+                },
+                visitors = new List<VisitorData>
+                {
+                    CreateVisitor(
+                        "Diego",
+                        false,
+                        "Por favor... vengo del puente de la Avenida San Martin. Esta destruido.",
+                        new[] { "rodillas raspadas", "respira con dificultad", "manos con barro" },
+                        Obs("SI", "SI", "NO", "SI", "AGITADO", "COHERENTES",
+                            "Tiembla al hablar", "Agitada", "NORMAL"),
+                        new[]
+                        {
+                            QA("De donde venis?", "Del puente sobre la Avenida San Martin, cerca del molino viejo.", ResponseTag.Coherent),
+                            QA("Que paso afuera?", "El puente cayo. Vi a tres personas caer al rio. Una era Lucia, la maestra.", ResponseTag.Coherent),
+                            QA("Conoces a alguien dentro?", "A Julia. Trabajamos juntos en el puesto de San Mateo.", ResponseTag.Coherent)
+                        },
+                        new[]
+                        {
+                            QA("Que escuchaste en la radio?", "Una voz repitiendo coordenadas. Creo que era del refugio norte.", ResponseTag.Coherent)
+                        },
+                        -1, 0, 1, 1,
+                        0, 0, -1, 0,
+                        "Diego entra arrastrando la pierna. Julia lo reconoce de inmediato.\nComida -1 | Moral +1 | Poblacion +1",
+                        "Diego intenta caminar pero la pierna no le responde. Se sienta junto a la puerta bajo la lluvia.\nMoral -1"),
+                    CreateVisitor(
+                        "Renata",
+                        true,
+                        "Soy Renata. Vengo de parte de Marcos, del refugio norte.",
+                        new[] { "sonrisa leve", "ropa limpia pese al barro afuera", "voz demasiado calma" },
+                        Obs("NO", "NO", "NO", "NO", "CALMA", "INCONSISTENTES",
+                            "Voz demasiado calma", "Mecanica", "FRIA"),
+                        new[]
+                        {
+                            QA("De donde venis?", "Del refugio norte. Marcos me mando.", ResponseTag.Coherent),
+                            QA("Donde queda el refugio norte?", "Cerca de... las casas. Las casas grandes.", ResponseTag.Evasive),
+                            QA("Conoces a alguien dentro?", "A Elena. Y a Bruno. Los conozco bien.", ResponseTag.Contradictory)
+                        },
+                        new[]
+                        {
+                            QA("Que dijo la radio sobre el refugio norte?", "No se de que radio hablas.", ResponseTag.Evasive)
+                        },
+                        0, -3, -1, 0,
+                        0, 1, 0, 0,
+                        "Renata entra con paso firme. Nadie del refugio norte ha respondido la radio en dos noches.\nSeguridad -3 | Moral -1",
+                        "Renata deja de sonreir cuando le pedis que describa el camino. Se retira sin insistir.\nSeguridad +1"),
+                    CreateVisitor(
+                        "Fabian",
+                        false,
+                        "No aguanto mas afuera. Escucho cosas que no deberian estar ahi.",
+                        new[] { "ojos rojos", "manos tapando orejas", "campera empapada" },
+                        Obs("SI", "SI", "SI", "NO", "PARANOICO", "COHERENTES",
+                            "Tiembla al hablar", "Agitada", "NORMAL"),
+                        new[]
+                        {
+                            QA("De donde venis?", "De la terminal de colectivos de la calle Rivadavia.", ResponseTag.Coherent),
+                            QA("Que paso afuera?", "Algo imita voces. Escuche a mi hermano llamarme, pero el murio hace un año.", ResponseTag.Coherent),
+                            QA("Por que necesitas entrar?", "Si sigo escuchando esas voces voy a abrir la puerta yo mismo.", ResponseTag.Coherent)
+                        },
+                        new[]
+                        {
+                            QA("Que escuchaste en la radio?", "Interferencia. Y despues una voz que decia mi nombre.", ResponseTag.Coherent)
+                        },
+                        -1, 0, 0, 1,
+                        0, -1, -1, 0,
+                        "Fabian se sienta en un rincon tapandose los oidos. No habla con nadie.\nComida -1 | Poblacion +1",
+                        "Fabian corre hacia la oscuridad gritando que ya no le importa.\nSeguridad -1 | Moral -1"),
+                    CreateVisitor(
+                        "Sombra",
+                        true,
+                        "Me llamo Lucas. Vengo del hospital de la zona sur.",
+                        new[] { "no parpadea", "nombra lugares pero no describe caminos", "sin marcas de lluvia" },
+                        Obs("NO", "NO", "NO", "NO", "INMOVIL", "EVASIVAS",
+                            "Repite cadencia", "Ausente", "IRREGULAR"),
+                        new[]
+                        {
+                            QA("De donde venis?", "Del hospital. El de la zona sur. Con Daniela y Roberto.", ResponseTag.Coherent),
+                            QA("Como llegaste hasta aca?", "Camine. Por las calles. Las calles de aca.", ResponseTag.Evasive),
+                            QA("Que habia en el camino?", "Cosas. Cosas normales. Nada fuera de lugar.", ResponseTag.Contradictory)
+                        },
+                        new[]
+                        {
+                            QA("La radio menciono sobrevivientes del hospital?", "Si. Exacto. Eso. Sobrevivientes.", ResponseTag.Evasive)
+                        },
+                        -1, -4, -2, 0,
+                        0, 2, 0, 0,
+                        "Lucas entra nombrando gente que nadie conoce. Las luces del pasillo parpadean una vez.\nComida -1 | Seguridad -4 | Moral -2",
+                        "Lucas se queda mirando la puerta cerrada. Despues de un minuto, desaparece de la ventana.\nSeguridad +2")
+                },
+                interEvents = new List<InterVisitorEvent>
+                {
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.InteriorDoorKnock,
+                        narrativeText = "Alguien golpea una puerta interior que deberia estar cerrada con llave.",
+                        securityChange = -1,
+                        moraleChange = -1,
+                        probability = 0.7f
+                    },
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.FalseRumor,
+                        narrativeText = "Corre un rumor entre los residentes: 'Dicen que el operador dejo entrar a uno de ellos.'",
+                        moraleChange = -2,
+                        probability = 0.6f,
+                        requiresPreviousAccepted = true
+                    },
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.DistantScream,
+                        narrativeText = "Un grito lejano atraviesa las paredes del refugio. Nadie sabe si viene de adentro o de afuera.",
+                        moraleChange = -1,
+                        securityChange = -1,
+                        probability = 0.5f
+                    },
+                    new InterVisitorEvent
+                    {
+                        eventType = InterEventType.SilenceBreak,
+                        narrativeText = "El silencio se quiebra de golpe. Un ruido como de algo arrastrándose en el techo.",
+                        securityChange = 0,
+                        moraleChange = -1,
+                        probability = 0.8f
+                    }
+                }
             }
         };
     }
@@ -234,6 +370,32 @@ public static class ExampleVisitorFactory
         string feedbackOnAccept,
         string feedbackOnReject)
     {
+        return CreateVisitor(visitorName, isImitator, introDialogue, visualClues,
+            observationProfile, answers, null,
+            foodAccept, securityAccept, moraleAccept, populationAccept,
+            foodReject, securityReject, moraleReject, populationReject,
+            feedbackOnAccept, feedbackOnReject);
+    }
+
+    private static VisitorData CreateVisitor(
+        string visitorName,
+        bool isImitator,
+        string introDialogue,
+        string[] visualClues,
+        ObservationProfile observationProfile,
+        QuestionAnswer[] answers,
+        QuestionAnswer[] radioQuestions,
+        int foodAccept,
+        int securityAccept,
+        int moraleAccept,
+        int populationAccept,
+        int foodReject,
+        int securityReject,
+        int moraleReject,
+        int populationReject,
+        string feedbackOnAccept,
+        string feedbackOnReject)
+    {
         VisitorData visitor = ScriptableObject.CreateInstance<VisitorData>();
         visitor.visitorName = visitorName;
         visitor.isImitator = isImitator;
@@ -242,6 +404,10 @@ public static class ExampleVisitorFactory
         visitor.visualClues.AddRange(visualClues);
         visitor.observationProfile = observationProfile;
         visitor.answers.AddRange(answers);
+        if (radioQuestions != null)
+        {
+            visitor.radioQuestions.AddRange(radioQuestions);
+        }
         visitor.foodChangeOnAccept = foodAccept;
         visitor.securityChangeOnAccept = securityAccept;
         visitor.moraleChangeOnAccept = moraleAccept;
@@ -265,6 +431,22 @@ public static class ExampleVisitorFactory
             visibleWounds = visibleWounds,
             behavior = behavior,
             answers = answers
+        };
+    }
+
+    private static ObservationProfile Obs(string wetClothes, string tremor, string evasiveLook, string visibleWounds, string behavior, string answers, string voiceTone, string breathingPattern, string bodyTemperature)
+    {
+        return new ObservationProfile
+        {
+            wetClothes = wetClothes,
+            tremor = tremor,
+            evasiveLook = evasiveLook,
+            visibleWounds = visibleWounds,
+            behavior = behavior,
+            answers = answers,
+            voiceTone = voiceTone,
+            breathingPattern = breathingPattern,
+            bodyTemperature = bodyTemperature
         };
     }
 

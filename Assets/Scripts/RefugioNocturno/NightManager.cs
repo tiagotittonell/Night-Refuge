@@ -140,6 +140,13 @@ public class NightManager : MonoBehaviour
             interEventSystem.SetNightEvents(night);
         }
 
+        // Consume coffee charge for this night
+        UpgradeManager upgrades = Object.FindFirstObjectByType<UpgradeManager>();
+        if (upgrades != null)
+        {
+            upgrades.ConsumeCoffeeForNight();
+        }
+
         if (rulePanel != null)
         {
             rulePanel.SetActive(true);
@@ -225,10 +232,18 @@ public class NightManager : MonoBehaviour
             return;
         }
 
-        // Apply resource effects
+        // Apply resource effects (ExtraGuard mitigates security loss from events too)
+        int secChange = interEvent.securityChange;
+        UpgradeManager upgrades = Object.FindFirstObjectByType<UpgradeManager>();
+        if (upgrades != null && secChange < 0 && upgrades.HasUpgrade(UpgradeEffect.ExtraGuard))
+        {
+            secChange += upgrades.GetUpgradeValue(UpgradeEffect.ExtraGuard);
+            if (secChange > 0) secChange = 0;
+        }
+
         refugeStats.ApplyChanges(
             interEvent.foodChange,
-            interEvent.securityChange,
+            secChange,
             interEvent.moraleChange,
             interEvent.populationChange);
 
@@ -268,6 +283,14 @@ public class NightManager : MonoBehaviour
             rulePanel.SetActive(false);
         }
 
+        // Apply ExtraGuard food cost before checking depletion
+        int guardFoodCost = 0;
+        UpgradeManager upgrades = Object.FindFirstObjectByType<UpgradeManager>();
+        if (upgrades != null)
+        {
+            guardFoodCost = upgrades.ApplyGuardFoodCost(refugeStats);
+        }
+
         if (refugeStats != null && refugeStats.FoodDepleted)
         {
             EndRun(
@@ -281,7 +304,7 @@ public class NightManager : MonoBehaviour
         {
             if (hasNextNight)
             {
-                endNightSummaryUI.Show(currentSummary, refugeStats, true);
+                endNightSummaryUI.Show(currentSummary, refugeStats, true, "", "", guardFoodCost);
             }
             else
             {
@@ -291,7 +314,8 @@ public class NightManager : MonoBehaviour
                     refugeStats,
                     false,
                     "VICTORIA",
-                    "Sobreviviste las dos noches. El refugio sigue en pie, aunque nadie vuelve a mirar la ventana igual.");
+                    "Sobreviviste todas las noches. El refugio sigue en pie, aunque nadie vuelve a mirar la ventana igual.",
+                    guardFoodCost);
             }
         }
     }

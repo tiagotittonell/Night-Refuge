@@ -295,16 +295,16 @@ public class UIScaffoldGenerator : EditorWindow
         // All event panels: name → sprite path → preview text
         var eventPanels = new (string name, string sprite, string preview)[]
         {
-            ("InterEvent_NoiseInDucts",    "UI/Events/event_noise_ducts",  "Ruidos extraños en los ductos de ventilación..."),
-            ("InterEvent_ShelterProtest",  "UI/Events/event_protest",      "Tensión interna. Algunos residentes protestan en los pasillos."),
-            ("InterEvent_Blackout",        "UI/Events/event_blackout",     "Corte de luz. El refugio queda en penumbras."),
-            ("InterEvent_Radio",           "UI/Events/event_blackout_alt", "La radio capta una señal intermitente..."),
-            ("InterEvent_DoorKnock",       "UI/Events/event_blackout_alt", "Alguien golpea una puerta interior."),
-            ("InterEvent_PersonInfo",      "UI/Events/event_blackout_alt", "El residente aceptado da información sobre el exterior."),
-            ("InterEvent_FalseRumor",      "UI/Events/event_protest",      "Corre un rumor entre los residentes..."),
-            ("InterEvent_DistantScream",   "UI/Events/event_blackout",     "Un grito lejano rompe el silencio del refugio."),
-            ("InterEvent_SilenceBreak",    "UI/Events/event_noise_ducts",  "El silencio se quiebra de repente."),
-            ("InterEvent_Generic",         "UI/Events/event_blackout_alt", "[Evento]"),
+            ("InterEvent_NoiseInDucts",    "UI/Events/event_noise_ducts",    "Ruidos extraños en los ductos de ventilación..."),
+            ("InterEvent_ShelterProtest",  "UI/Events/event_protest",        "Tensión interna. Algunos residentes protestan en los pasillos."),
+            ("InterEvent_Blackout",        "UI/Events/event_blackout",       "Corte de luz. El refugio queda en penumbras."),
+            ("InterEvent_Radio",           "UI/Events/event_radio",          "La radio capta una señal intermitente..."),
+            ("InterEvent_DoorKnock",       "UI/Events/event_door_knock",     "Alguien golpea una puerta interior."),
+            ("InterEvent_PersonInfo",      "UI/Events/event_person_info",    "El residente aceptado da información sobre el exterior."),
+            ("InterEvent_FalseRumor",      "UI/Events/event_false_rumor",    "Corre un rumor entre los residentes..."),
+            ("InterEvent_DistantScream",   "UI/Events/event_distant_scream", "Un grito lejano rompe el silencio del refugio."),
+            ("InterEvent_SilenceBreak",    "UI/Events/event_silence_break",  "El silencio se quiebra de repente."),
+            ("InterEvent_Generic",         "UI/Events/event_blackout_alt",   "[Evento]"),
         };
 
         int created = 0;

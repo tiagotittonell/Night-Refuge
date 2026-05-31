@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -226,8 +227,43 @@ public class UpgradeShopUI : MonoBehaviour
 
         if (upgradeManager.TryPurchase(upgrade))
         {
+            ShowPurchaseFeedback(upgrade);
             RefreshDisplay();
         }
+    }
+
+    private Coroutine feedbackCoroutine;
+
+    private void ShowPurchaseFeedback(UpgradeData upgrade)
+    {
+        string msg = $"✓ Mejora adquirida: {upgrade.upgradeName}";
+
+        // Use supplies text area temporarily to flash feedback, then restore
+        if (feedbackCoroutine != null)
+        {
+            StopCoroutine(feedbackCoroutine);
+        }
+        feedbackCoroutine = StartCoroutine(FeedbackRoutine(msg));
+    }
+
+    private System.Collections.IEnumerator FeedbackRoutine(string message)
+    {
+        string originalSupplies = suppliesText != null ? suppliesText.text : "";
+        string originalLegacy = suppliesLegacyText != null ? suppliesLegacyText.text : "";
+
+        Color feedbackColor = new Color(0.4f, 0.8f, 0.3f, 1f);
+        Color normalColor = new Color(0.78f, 0.70f, 0.58f, 1f);
+
+        if (suppliesText != null) { suppliesText.text = message; suppliesText.color = feedbackColor; }
+        if (suppliesLegacyText != null) { suppliesLegacyText.text = message; suppliesLegacyText.color = feedbackColor; }
+
+        yield return new WaitForSeconds(1.8f);
+
+        // Restore with current supplies
+        string current = upgradeManager != null ? $"SUMINISTROS: {upgradeManager.Supplies}" : originalSupplies;
+        if (suppliesText != null) { suppliesText.text = current; suppliesText.color = normalColor; }
+        if (suppliesLegacyText != null) { suppliesLegacyText.text = current; suppliesLegacyText.color = normalColor; }
+        feedbackCoroutine = null;
     }
 
     private void ClearButtons()

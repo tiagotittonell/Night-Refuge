@@ -10,7 +10,8 @@ public enum NightRuleType
     WoundedHumansLieFromFear,
     FakeRefugeReference,
     ImitatorsHaveCleanHands,
-    ImitatorsAvoidSpecificDetails
+    ImitatorsAvoidSpecificDetails,
+    ImitatorsUseNamesButFailPlaces
 }
 
 [Serializable]

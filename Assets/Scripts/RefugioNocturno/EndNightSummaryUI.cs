@@ -30,7 +30,7 @@ public class EndNightSummaryUI : MonoBehaviour
         nightManager = manager;
     }
 
-    public void Show(NightSummary summary, RefugeStats stats, bool hasNextNight, string title = "", string overrideResult = "")
+    public void Show(NightSummary summary, RefugeStats stats, bool hasNextNight, string title = "", string overrideResult = "", int guardFoodCost = 0)
     {
         EnsureLayout();
 
@@ -54,6 +54,9 @@ public class EndNightSummaryUI : MonoBehaviour
         string suppliesLine = hasNextNight && suppliesEarned > 0
             ? $"\nSuministros ganados: +{suppliesEarned}\n"
             : "";
+        string guardLine = guardFoodCost > 0
+            ? $"\nGuardia extra consumió {guardFoodCost} comida.\n"
+            : "";
         string summaryTextValue =
             $"{header}\n\n" +
             $"Humanos aceptados: {summary.humansAccepted}\n" +
@@ -64,6 +67,7 @@ public class EndNightSummaryUI : MonoBehaviour
             $"Seguridad: {stats.Security}\n" +
             $"Moral: {stats.Morale}\n" +
             $"Poblacion: {stats.Population}\n" +
+            $"{guardLine}" +
             $"{suppliesLine}\n" +
             $"Resultado general: {result}";
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -88,39 +89,60 @@ public class DecisionController : MonoBehaviour
             questionUI.SetInteractable(false);
         }
 
+        int foodApplied = 0;
+        int securityApplied = 0;
+        int moraleApplied = 0;
+        int popApplied = 0;
+
         if (accepted)
         {
             int securityChange = visitor.securityChangeOnAccept;
             int foodChange = visitor.foodChangeOnAccept;
 
-            // Cerradura reforzada: reduce daño de seguridad
             UpgradeManager upgrades = Object.FindFirstObjectByType<UpgradeManager>();
+
+            // Cerradura reforzada: reduce daño de seguridad
             if (upgrades != null && securityChange < 0 && upgrades.HasUpgrade(UpgradeEffect.ReinforcedLock))
             {
                 securityChange += upgrades.GetUpgradeValue(UpgradeEffect.ReinforcedLock);
                 if (securityChange > 0) securityChange = 0;
             }
 
-            // Racionamiento: reduce comida consumida
+            // Guardia extra: reduce daño de seguridad adicional
+            if (upgrades != null && securityChange < 0 && upgrades.HasUpgrade(UpgradeEffect.ExtraGuard))
+            {
+                securityChange += upgrades.GetUpgradeValue(UpgradeEffect.ExtraGuard);
+                if (securityChange > 0) securityChange = 0;
+            }
+
+            // Racionamiento: reduce comida consumida, pero baja moral ligeramente
             if (upgrades != null && foodChange < 0 && upgrades.HasUpgrade(UpgradeEffect.Rationing))
             {
                 foodChange += upgrades.GetUpgradeValue(UpgradeEffect.Rationing);
                 if (foodChange > 0) foodChange = 0;
             }
 
-            refugeStats.ApplyChanges(
-                foodChange,
-                securityChange,
-                visitor.moraleChangeOnAccept,
-                visitor.populationChangeOnAccept);
+            foodApplied = foodChange;
+            securityApplied = securityChange;
+            moraleApplied = visitor.moraleChangeOnAccept;
+            popApplied = visitor.populationChangeOnAccept;
+
+            // Rationing drawback: slight morale penalty when accepting visitors
+            if (upgrades != null && upgrades.HasUpgrade(UpgradeEffect.Rationing) && !visitor.isImitator)
+            {
+                moraleApplied -= 1;
+            }
+
+            refugeStats.ApplyChanges(foodApplied, securityApplied, moraleApplied, popApplied);
         }
         else
         {
-            refugeStats.ApplyChanges(
-                visitor.foodChangeOnReject,
-                visitor.securityChangeOnReject,
-                visitor.moraleChangeOnReject,
-                visitor.populationChangeOnReject);
+            foodApplied = visitor.foodChangeOnReject;
+            securityApplied = visitor.securityChangeOnReject;
+            moraleApplied = visitor.moraleChangeOnReject;
+            popApplied = visitor.populationChangeOnReject;
+
+            refugeStats.ApplyChanges(foodApplied, securityApplied, moraleApplied, popApplied);
         }
 
         if (dialogueUI == null)
@@ -133,7 +155,7 @@ public class DecisionController : MonoBehaviour
             dialogueUI.ShowDecisionFeedback(GetDecisionFeedback(visitor, accepted));
         }
 
-        RecordVisitorDecision(visitor, accepted);
+        RecordVisitorDecision(visitor, accepted, foodApplied, securityApplied, moraleApplied, popApplied);
 
         // Consume clock time for making a decision
         NightClock clock = Object.FindFirstObjectByType<NightClock>();
@@ -153,7 +175,7 @@ public class DecisionController : MonoBehaviour
         }
     }
 
-    private void RecordVisitorDecision(VisitorData visitor, bool accepted)
+    private void RecordVisitorDecision(VisitorData visitor, bool accepted, int foodApplied, int securityApplied, int moraleApplied, int popApplied)
     {
         if (visitorLog == null)
         {
@@ -186,6 +208,23 @@ public class DecisionController : MonoBehaviour
         }
 
         record.decisionFeedback = GetDecisionFeedback(visitor, accepted);
+        record.foodDelta = foodApplied;
+        record.securityDelta = securityApplied;
+        record.moraleDelta = moraleApplied;
+        record.populationDelta = popApplied;
+
+        // Collect questions asked during this visitor
+        if (questionUI == null)
+        {
+            questionUI = Object.FindFirstObjectByType<QuestionUI>();
+        }
+        if (questionUI != null)
+        {
+            questionUI.GetAndClearPendingQuestions(out var questions, out var tags);
+            record.questionsAsked.AddRange(questions);
+            record.responseTags.AddRange(tags);
+        }
+
         visitorLog.RegisterVisitor(record);
     }
 

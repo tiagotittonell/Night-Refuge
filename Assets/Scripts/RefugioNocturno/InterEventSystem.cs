@@ -62,13 +62,16 @@ public class InterEventSystem : MonoBehaviour
     private NightData currentNight;
     private bool lastVisitorWasAccepted;
     private int currentSecurityLevel = 5;
+    private bool blackoutActiveThisNight;
 
     public float EventDisplayDuration => eventDisplayDuration;
+    public bool IsBlackoutActive => blackoutActiveThisNight;
 
     public void SetNightEvents(NightData night)
     {
         currentNight = night;
         pendingEvents.Clear();
+        blackoutActiveThisNight = false;
 
         if (night != null && night.interEvents != null)
         {
@@ -121,6 +124,12 @@ public class InterEventSystem : MonoBehaviour
 
     public void NotifyEventTriggered(InterVisitorEvent interEvent)
     {
+        // Track blackout state for lamp system
+        if (interEvent.eventType == InterEventType.PartialBlackout)
+        {
+            blackoutActiveThisNight = true;
+        }
+
         EventTriggered?.Invoke(interEvent);
     }
 

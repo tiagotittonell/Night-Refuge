@@ -81,6 +81,7 @@ public static class UISpriteLoader
             case UpgradeEffect.ThermalDetector: return "UI/Upgrades/thermal_detector";
             case UpgradeEffect.ExtraGuard: return "UI/Upgrades/extra_guard";
             case UpgradeEffect.OperatorCoffee: return "UI/Upgrades/operator_coffee";
+            case UpgradeEffect.InternalArchive: return "UI/Upgrades/internal_archive";
             default: return null;
         }
     }
@@ -92,6 +93,12 @@ public static class UISpriteLoader
             case InterEventType.NoiseInDucts: return "UI/Events/event_noise_ducts";
             case InterEventType.PartialBlackout: return "UI/Events/event_blackout";
             case InterEventType.ShelterProtest: return "UI/Events/event_protest";
+            case InterEventType.IntermittentRadio: return "UI/Events/event_radio";
+            case InterEventType.AcceptedPersonInfo: return "UI/Events/event_person_info";
+            case InterEventType.InteriorDoorKnock: return "UI/Events/event_door_knock";
+            case InterEventType.FalseRumor: return "UI/Events/event_false_rumor";
+            case InterEventType.DistantScream: return "UI/Events/event_distant_scream";
+            case InterEventType.SilenceBreak: return "UI/Events/event_silence_break";
             default: return "UI/Events/event_blackout_alt";
         }
     }

@@ -87,7 +87,26 @@ public class DialogueUI : MonoBehaviour
             return;
         }
 
-        SetText(observationValuesText, observationValuesLegacyText, visitor.observationProfile.ToPanelText());
+        // Get upgrade status for sensor display
+        UpgradeManager upgrades = UnityEngine.Object.FindFirstObjectByType<UpgradeManager>();
+        bool hasMic = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ImprovedMicrophone);
+        bool hasThermal = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ThermalDetector);
+        bool hasLamp = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ReinforcedLamp);
+
+        // Check blackout state
+        InterEventSystem eventSystem = UnityEngine.Object.FindFirstObjectByType<InterEventSystem>();
+        bool blackout = eventSystem != null && eventSystem.IsBlackoutActive;
+
+        // Get night number for deterministic noise
+        NightManager nightManager = UnityEngine.Object.FindFirstObjectByType<NightManager>();
+        int nightNum = nightManager != null ? nightManager.CurrentNightNumber : 1;
+
+        // Apply observation noise filter
+        ObservationProfile filtered = ObservationFilter.Filter(
+            visitor.observationProfile, nightNum, visitor.visitorName, hasLamp, blackout);
+
+        SetText(observationValuesText, observationValuesLegacyText,
+            filtered.ToFullPanelText(hasMic, hasThermal));
     }
 
     private void SetText(TMP_Text tmpText, Text legacyText, string value)

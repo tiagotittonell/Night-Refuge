@@ -77,9 +77,34 @@ public class SuspicionSystem : MonoBehaviour
 
     private void Recalculate()
     {
-        int score = CalculateObservationScore(currentVisitor.observationProfile);
+        // Use filtered profile for scoring — same data the player sees
+        UpgradeManager upgrades = Object.FindFirstObjectByType<UpgradeManager>();
+        bool hasLamp = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ReinforcedLamp);
+        bool hasMic = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ImprovedMicrophone);
+        bool hasThermal = upgrades != null && upgrades.HasUpgrade(UpgradeEffect.ThermalDetector);
+
+        InterEventSystem eventSystem = Object.FindFirstObjectByType<InterEventSystem>();
+        bool blackout = eventSystem != null && eventSystem.IsBlackoutActive;
+
+        NightManager nightManager = Object.FindFirstObjectByType<NightManager>();
+        int nightNum = nightManager != null ? nightManager.CurrentNightNumber : 1;
+
+        ObservationProfile filtered = ObservationFilter.Filter(
+            currentVisitor.observationProfile, nightNum, currentVisitor.visitorName, hasLamp, blackout);
+
+        int score = CalculateObservationScore(filtered);
         score += CalculateResponseScore();
         score += CalculateNightRuleScore();
+
+        // Audio/thermal scoring only if sensors owned
+        if (hasMic)
+        {
+            score += CalculateAudioScore(currentVisitor.observationProfile);
+        }
+        if (hasThermal)
+        {
+            score += CalculateThermalScore(currentVisitor.observationProfile);
+        }
 
         CurrentScore = Mathf.Max(0, score);
         SuspicionLevel newLevel = ScoreToLevel(CurrentScore);
@@ -100,6 +125,12 @@ public class SuspicionSystem : MonoBehaviour
         string behavior = Normalize(profile.behavior);
         string answers = Normalize(profile.answers);
 
+        // Skip noisy/inconclusive fields — they shouldn't affect scoring
+        if (IsNoise(wet)) wet = "";
+        if (IsNoise(tremor)) tremor = "";
+        if (IsNoise(evasive)) evasive = "";
+        if (IsNoise(behavior)) behavior = "";
+
         // Ropa seca cuando debería estar mojada (contexto de lluvia) es sospechoso
         if (wet == "NO")
         {
@@ -119,19 +150,25 @@ public class SuspicionSystem : MonoBehaviour
         }
 
         // Comportamiento anormal
-        if (behavior != "NORMAL" && behavior != "ASUSTADA" && behavior != "ASUSTADO"
+        if (!string.IsNullOrEmpty(behavior) &&
+            behavior != "NORMAL" && behavior != "ASUSTADA" && behavior != "ASUSTADO"
             && behavior != "NERVIOSA" && behavior != "NERVIOSO" && behavior != "AGITADA")
         {
             score += weightAbnormalBehavior;
         }
 
         // Respuestas incoherentes en el perfil
-        if (answers != "COHERENTES")
+        if (answers != "COHERENTES" && !string.IsNullOrEmpty(answers))
         {
             score += weightIncoherentAnswers;
         }
 
         return score;
+    }
+
+    private static bool IsNoise(string value)
+    {
+        return value == "INCONCLUSO" || value == "NO VISIBLE" || value == "FALLA DE LUZ";
     }
 
     private int CalculateResponseScore()
@@ -264,6 +301,27 @@ public class SuspicionSystem : MonoBehaviour
                 }
                 return false;
 
+            case NightRuleType.ImitatorsUseNamesButFailPlaces:
+                // Violación: usa nombres propios pero falla al recordar lugares
+                bool usesNames = false;
+                bool failsPlaces = false;
+                foreach (QuestionAnswer qa in answered)
+                {
+                    if (qa.answer != null && ContainsCapitalWord(qa.answer))
+                    {
+                        usesNames = true;
+                    }
+                    if (qa.question != null &&
+                        (qa.question.ToLowerInvariant().Contains("donde") ||
+                         qa.question.ToLowerInvariant().Contains("lugar") ||
+                         qa.question.ToLowerInvariant().Contains("venis")) &&
+                        (qa.responseTag == ResponseTag.Evasive || qa.responseTag == ResponseTag.Contradictory))
+                    {
+                        failsPlaces = true;
+                    }
+                }
+                return usesNames && failsPlaces;
+
             default:
                 return false;
         }
@@ -287,6 +345,53 @@ public class SuspicionSystem : MonoBehaviour
         }
 
         return SuspicionLevel.Unknown;
+    }
+
+    private int CalculateAudioScore(ObservationProfile raw)
+    {
+        if (raw == null) return 0;
+        int score = 0;
+        string voice = Normalize(raw.voiceTone);
+        string breath = Normalize(raw.breathingPattern);
+
+        // Suspicious voice patterns
+        if (voice == "VOZ SIN AIRE" || voice == "VOZ DEMASIADO CALMA" || voice == "REPITE CADENCIA")
+        {
+            score += 2;
+        }
+        else if (voice == "TIEMBLA AL HABLAR")
+        {
+            score -= 1; // Sounds human/afraid
+        }
+
+        // Suspicious breathing
+        if (breath == "IRREGULAR" || breath == "AUSENTE" || breath == "MECANICA")
+        {
+            score += 2;
+        }
+        else if (breath == "AGITADA")
+        {
+            score -= 1; // Sounds human/scared
+        }
+
+        return score;
+    }
+
+    private int CalculateThermalScore(ObservationProfile raw)
+    {
+        if (raw == null) return 0;
+        string temp = Normalize(raw.bodyTemperature);
+
+        if (temp == "FRIA" || temp == "IRREGULAR")
+        {
+            return 2;
+        }
+        if (temp == "ERROR" || temp == "NO MEDIBLE")
+        {
+            return 1; // Inconclusive but slightly suspicious
+        }
+
+        return 0; // NORMAL = no suspicion from thermal
     }
 
     private void SetLevel(SuspicionLevel level)

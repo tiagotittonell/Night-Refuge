@@ -38,7 +38,17 @@ public class QuestionUI : MonoBehaviour
             return;
         }
 
-        foreach (QuestionAnswer questionAnswer in visitor.answers)
+        // Build question list: normal + radio (if upgrade owned)
+        List<QuestionAnswer> allQuestions = new List<QuestionAnswer>(visitor.answers);
+
+        UpgradeManager upgradeManager = UnityEngine.Object.FindFirstObjectByType<UpgradeManager>();
+        if (upgradeManager != null && upgradeManager.HasUpgrade(UpgradeEffect.ShortWaveRadio)
+            && visitor.radioQuestions != null && visitor.radioQuestions.Count > 0)
+        {
+            allQuestions.AddRange(visitor.radioQuestions);
+        }
+
+        foreach (QuestionAnswer questionAnswer in allQuestions)
         {
             Button button = questionButtonPrefab != null
                 ? Instantiate(questionButtonPrefab, questionsContainer)
@@ -49,14 +59,18 @@ public class QuestionUI : MonoBehaviour
             TMP_Text label = button.GetComponentInChildren<TMP_Text>();
             Text legacyLabel = button.GetComponentInChildren<Text>();
 
+            // Mark radio questions with a prefix
+            bool isRadio = visitor.radioQuestions != null && visitor.radioQuestions.Contains(questionAnswer);
+            string prefix = isRadio ? "📻 " : "";
+
             if (label != null)
             {
-                label.text = questionAnswer.question;
+                label.text = prefix + questionAnswer.question;
             }
 
             if (legacyLabel != null)
             {
-                legacyLabel.text = questionAnswer.question;
+                legacyLabel.text = prefix + questionAnswer.question;
             }
 
             QuestionAnswer capturedAnswer = questionAnswer;
@@ -91,6 +105,9 @@ public class QuestionUI : MonoBehaviour
             dialogueUI.ShowAnswer(questionAnswer.answer);
         }
 
+        // Record question for visitor log (InternalArchive feature)
+        RecordQuestionForLog(questionAnswer);
+
         // Consume clock time for asking a question
         NightClock clock = UnityEngine.Object.FindFirstObjectByType<NightClock>();
         if (clock != null)
@@ -106,6 +123,28 @@ public class QuestionUI : MonoBehaviour
         }
 
         UpdateRemainingText();
+    }
+
+    private void RecordQuestionForLog(QuestionAnswer qa)
+    {
+        // Store temporarily — will be attached to VisitorRecord when decision is made
+        pendingQuestions.Add(qa.question);
+        pendingTags.Add(qa.responseTag);
+    }
+
+    private readonly List<string> pendingQuestions = new List<string>();
+    private readonly List<ResponseTag> pendingTags = new List<ResponseTag>();
+
+    /// <summary>
+    /// Returns questions asked for the current visitor and clears the buffer.
+    /// Called by DecisionController when recording the visitor decision.
+    /// </summary>
+    public void GetAndClearPendingQuestions(out List<string> questions, out List<ResponseTag> tags)
+    {
+        questions = new List<string>(pendingQuestions);
+        tags = new List<ResponseTag>(pendingTags);
+        pendingQuestions.Clear();
+        pendingTags.Clear();
     }
 
     private void UpdateRemainingText()
@@ -151,10 +190,8 @@ public class QuestionUI : MonoBehaviour
             bonus += upgradeManager.GetUpgradeValue(UpgradeEffect.ExtraQuestion);
         }
 
-        if (upgradeManager.HasUpgrade(UpgradeEffect.OperatorCoffee))
-        {
-            bonus += 1;
-        }
+        // Coffee gives +1 for the whole night (tracked at night level, not per visitor)
+        bonus += upgradeManager.CoffeeAvailableThisNight;
 
         return bonus;
     }
