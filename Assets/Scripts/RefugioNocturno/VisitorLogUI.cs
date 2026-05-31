@@ -174,17 +174,85 @@ public class VisitorLogUI : MonoBehaviour
 
         if (toggleButton == null)
         {
-            GameObject btn = GameObject.Find("VisitorLogToggleButton");
+            GameObject btn = UISpriteLoader.FindIncludingInactive("VisitorLogToggleButton");
             if (btn != null)
             {
                 toggleButton = btn.GetComponent<Button>();
-                if (toggleButton != null)
-                {
-                    toggleButton.onClick.RemoveListener(Toggle);
-                    toggleButton.onClick.AddListener(Toggle);
-                }
+            }
+            else
+            {
+                CreateToggleButton();
+            }
+
+            if (toggleButton != null)
+            {
+                toggleButton.onClick.RemoveListener(Toggle);
+                toggleButton.onClick.AddListener(Toggle);
             }
         }
+    }
+
+    private void CreateToggleButton()
+    {
+        GameObject dynamicLayer = GameObject.Find("DynamicGameplayLayer");
+        Canvas canvas = Object.FindFirstObjectByType<Canvas>();
+        Transform parent = dynamicLayer != null ? dynamicLayer.transform
+            : canvas != null ? canvas.transform : transform;
+
+        GameObject btnObj = new GameObject("VisitorLogToggleButton", typeof(RectTransform), typeof(Image), typeof(Button));
+        btnObj.transform.SetParent(parent, false);
+
+        RectTransform btnRect = btnObj.GetComponent<RectTransform>();
+        btnRect.anchorMin = new Vector2(1f, 1f);
+        btnRect.anchorMax = new Vector2(1f, 1f);
+        btnRect.pivot = new Vector2(1f, 1f);
+        btnRect.anchoredPosition = new Vector2(-15f, -60f);
+        btnRect.sizeDelta = new Vector2(160f, 40f);
+
+        Image btnImage = btnObj.GetComponent<Image>();
+        Sprite btnSprite = UISpriteLoader.ButtonNormal;
+        if (btnSprite != null)
+        {
+            btnImage.sprite = btnSprite;
+            btnImage.type = Image.Type.Sliced;
+            btnImage.color = Color.white;
+        }
+        else
+        {
+            btnImage.color = new Color(0.12f, 0.10f, 0.08f, 0.9f);
+        }
+
+        toggleButton = btnObj.GetComponent<Button>();
+
+        // Hover state
+        Sprite hoverSprite = UISpriteLoader.ButtonHover;
+        if (btnSprite != null && hoverSprite != null)
+        {
+            toggleButton.transition = Selectable.Transition.SpriteSwap;
+            SpriteState spriteState = new SpriteState
+            {
+                highlightedSprite = hoverSprite,
+                pressedSprite = hoverSprite
+            };
+            toggleButton.spriteState = spriteState;
+        }
+
+        GameObject labelObj = new GameObject("Label", typeof(RectTransform), typeof(Text));
+        labelObj.transform.SetParent(btnObj.transform, false);
+
+        RectTransform labelRect = labelObj.GetComponent<RectTransform>();
+        labelRect.anchorMin = Vector2.zero;
+        labelRect.anchorMax = Vector2.one;
+        labelRect.offsetMin = Vector2.zero;
+        labelRect.offsetMax = Vector2.zero;
+
+        Text label = labelObj.GetComponent<Text>();
+        label.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 16);
+        label.fontSize = 16;
+        label.color = new Color(0.78f, 0.70f, 0.58f, 1f);
+        label.alignment = TextAnchor.MiddleCenter;
+        label.raycastTarget = false;
+        label.text = "\u270d REGISTRO";
     }
 
     private void CreateFallbackPanel()

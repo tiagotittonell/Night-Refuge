@@ -131,11 +131,11 @@ public class UpgradeShopUI : MonoBehaviour
         rect.anchorMin = new Vector2(0f, 1f);
         rect.anchorMax = new Vector2(1f, 1f);
         rect.pivot = new Vector2(0.5f, 1f);
-        rect.sizeDelta = new Vector2(0f, 60f);
+        rect.sizeDelta = new Vector2(0f, 80f);
 
         LayoutElement layout = buttonObject.AddComponent<LayoutElement>();
-        layout.minHeight = 60f;
-        layout.preferredHeight = 60f;
+        layout.minHeight = 80f;
+        layout.preferredHeight = 80f;
 
         Image image = buttonObject.GetComponent<Image>();
         Sprite btnSprite = canAfford ? UISpriteLoader.ButtonNormal : UISpriteLoader.ButtonDisabled;
@@ -181,8 +181,8 @@ public class UpgradeShopUI : MonoBehaviour
             iconRect.anchorMin = new Vector2(0f, 0.5f);
             iconRect.anchorMax = new Vector2(0f, 0.5f);
             iconRect.pivot = new Vector2(0f, 0.5f);
-            iconRect.anchoredPosition = new Vector2(8f, 0f);
-            iconRect.sizeDelta = new Vector2(48f, 48f);
+            iconRect.anchoredPosition = new Vector2(10f, 0f);
+            iconRect.sizeDelta = new Vector2(64f, 64f);
 
             Image iconImage = iconObj.GetComponent<Image>();
             iconImage.sprite = upgradeIcon;
@@ -191,7 +191,7 @@ public class UpgradeShopUI : MonoBehaviour
         }
 
         // Label (offset to the right if icon present)
-        float labelLeft = upgradeIcon != null ? 64f : 12f;
+        float labelLeft = upgradeIcon != null ? 84f : 12f;
         GameObject textObject = new GameObject("Label", typeof(RectTransform), typeof(Text));
         textObject.transform.SetParent(buttonObject.transform, false);
 
@@ -202,8 +202,8 @@ public class UpgradeShopUI : MonoBehaviour
         textRect.offsetMax = new Vector2(-12f, -2f);
 
         Text label = textObject.GetComponent<Text>();
-        label.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 18);
-        label.fontSize = 18;
+        label.font = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Courier New", "Arial" }, 22);
+        label.fontSize = 22;
         label.color = canAfford
             ? new Color(0.78f, 0.70f, 0.58f, 1f)
             : new Color(0.5f, 0.45f, 0.4f, 0.7f);
