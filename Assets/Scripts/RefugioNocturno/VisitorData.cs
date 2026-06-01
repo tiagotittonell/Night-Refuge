@@ -69,36 +69,47 @@ public class ObservationProfile
     }
 
     /// <summary>
-    /// Returns the full observation text with sensor data included based on upgrades owned.
+    /// Returns only the value column for the observation panel.
+    /// Labels live in a separate static text object.
     /// Observation noise is applied via ObservationFilter before calling this.
     /// </summary>
     public string ToFullPanelText(bool hasMicrophone, bool hasThermal)
     {
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
-        sb.AppendLine($"Ropa mojada: {wetClothes}");
-        sb.AppendLine($"Temblor: {tremor}");
-        sb.AppendLine($"Mirada evasiva: {evasiveLook}");
-        sb.AppendLine($"Heridas visibles: {visibleWounds}");
-        sb.AppendLine($"Comportamiento: {behavior}");
-        sb.AppendLine($"Respuestas: {answers}");
+        sb.AppendLine(wetClothes);
+        sb.AppendLine();
+        sb.AppendLine(tremor);
+        sb.AppendLine();
+        sb.AppendLine(evasiveLook);
+        sb.AppendLine();
+        sb.AppendLine(visibleWounds);
+        sb.AppendLine();
+        sb.AppendLine(behavior);
+        sb.AppendLine();
+        sb.AppendLine(answers);
 
         if (hasMicrophone)
         {
             string voice = string.IsNullOrEmpty(voiceTone) ? "SIN DATOS" : voiceTone;
             string breath = string.IsNullOrEmpty(breathingPattern) ? "SIN DATOS" : breathingPattern;
-            sb.AppendLine($"Tono de voz: {voice}");
-            sb.AppendLine($"Respiracion: {breath}");
+            sb.AppendLine();
+            sb.AppendLine(voice);
+            sb.AppendLine();
+            sb.AppendLine(breath);
         }
         else
         {
-            sb.AppendLine("Tono de voz: NO DISPONIBLE");
-            sb.AppendLine("Respiracion: NO DISPONIBLE");
+            sb.AppendLine();
+            sb.AppendLine("NO DISPONIBLE");
+            sb.AppendLine();
+            sb.AppendLine("NO DISPONIBLE");
         }
 
         if (hasThermal)
         {
             string temp = string.IsNullOrEmpty(bodyTemperature) ? "SIN DATOS" : bodyTemperature;
-            sb.AppendLine($"Temperatura: {temp}");
+            sb.AppendLine();
+            sb.AppendLine(temp);
         }
 
         return sb.ToString();
